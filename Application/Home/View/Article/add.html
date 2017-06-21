@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <form style="text-align: center;width:550px; margin:0 auto;border: 1px solid black;margin-top: 50px;" id="yourformid">
+        <h2>文章新增</h2>
+        <label>所属栏目:</label>
+        <select name="parent" id="parent" style="width: 160px">
+            <volist name="results" id="row">
+                <option value={$row.id}>{$row.name}</option>
+            </volist>
+        </select>
+        <br/><br/>
+        <label>文章来源:</label><input type="text" name="source" id="source"/><br/><br/>
+        <label>文章标题:</label><input type="text" name="name" id="name"/><br/><br/>
+        <label>文章简介:</label><input type="text" name="intro" id="intro"/><br/><br/>
+        <label>文章类型:</label>
+        <select name="status" id="status" style="width: 160px">
+            <option value="1">置顶</option>
+            <option value="2">精华</option>
+            <option value="3">普通</option>
+        </select><br/><br/>
+        <label>文章内容:</label><textarea name="content" id="content" cols="21" rows="5" style="vertical-align:top"></textarea><br/><br/>
+        <label>形象图:</label><input type="file" name="img" /><br/><br/>
+        <label>附件:</label><input type="file" name="file"/><br/><br/>
+        <label>文章作者:</label><input type="text" name="author" id="author"/><br/><br/>
+        <label>SEO标题:</label><input type="text" name="title" id="title"/><br/><br/>
+        <label>SEO关键字:</label><input type="text" name="keyWord" id="keyword"/><br/><br/>
+        <label>SEO描述:</label><input type="text" name="description" id="description"/><br/><br/>
+        <input type="submit" id="btn-btn"/>
+    </form>
+    <script>
+        function checkAdd(){
+            if($('#source').val() == ''){
+                alert('请输入文章来源');
+                return false;
+            }else if($('#name').val() == ''){
+                alert('请输入文章标题');
+                return false;
+            }else if($('#intro').val() == ''){
+                alert('请输入文章简介');
+                return false;
+            }else if($('#content').val() == ''){
+                alert('请输入文章内容');
+                return false;
+            }else if($('#author').val() == ''){
+                alert('请输入文章作者');
+                return false;
+            }else if($('#title').val() == ''){
+                alert('请输入SEO标题');
+                return false;
+            }else if($('#keyword').val() == ''){
+                alert('请输入SEO关键字');
+                return false;
+            }else if($('#description').val() == ''){
+                alert('请输入SEO描述');
+                return false;
+            }
+        }
+    </script>
+    <script>
+        $(function(){
+            $("#btn-btn").click(function(){
+                if(checkAdd()==false){
+                    return false;
+                }
+                if(confirm("确定提交文章?")){
+                    $.post({
+                        type: "post",
+                        url:"{:U('/artAdd')}",
+                        data:$('#yourformid').serialize(),
+                        dataType:'json',
+                        success:function(res){
+                            if(res.error==0){
+                                alert(res.message);
+                                location.href="{:U('/article')}";
+                            }else{
+                                alert(res.message);
+                                return false;
+                            }
+                        },
+                        error : function () {
+                            alert('系统繁忙,请用电话与我们联系!')
+                        }
+                    });
+                }else{
+                    return false;
+                }
+                return false;
+            })
+        })
+    </script>
+
+</body>
+</html>

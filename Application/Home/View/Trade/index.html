@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轩辕币--交易中心</title>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+
+<form style="text-align: center;width:550px; margin:0 auto;border: 1px solid black;margin-top: 50px;">
+    <h1>轩辕币 - 买币-交易中心 欢迎你!</h1>
+    <label>委托价:</label><input type="text" id="price" onblur="checkPrice(this)"><span class="error1" style="display: none;color: red">请输入正确的委托价格!</span><br><br>
+    <label>委托量:</label><input type="text" id="number" onblur="checkNum(this)" placeholder="最大买入量"><span class="error2" style="display: none;color: red">请输入正确的委托量!</span><br><br>
+
+    <!--<label>资金密码:</label><input type="password" id="pass"  onkeyup="checkPass()"><span class="error" style="display: none;color: red">错误信息</span><br><br>-->
+    <label>资金密码:</label><input type="password" id="pass"  onblur="checkPass(this)"><span class="error" style="display: none;color: red">错误信息</span><br><br>
+
+    <label>交易额:</label><input name="total" value=""><br><br>
+    <if condition="$Think.session.phone neq null">
+        <button class="btn buy" data-uid="{$Think.session.phone}">买入XYC--已登录</button><br><br>
+        <button class="btn sell" data-uid="{$Think.session.phone}">卖出XYC--已登录</button><br><br>
+    <else />
+        <button class="btn buy" data-uid="no">买入XYC--未登录</button><br><br>
+        <button class="btn sell" data-uid="no">卖出XYC--未登录</button><br><br>
+    </if>
+</form>
+<br><br><br>
+<input type="button" value="系统撮合交易">
+<br><br><br>
+<!--<form style="text-align: center;width:550px; margin:0 auto;border: 1px solid black;margin-top: 50px;">-->
+    <!--<h1>轩辕币 - 卖币-交易中心 欢迎你!</h1>-->
+    <!--<label>卖出价:</label><input type="text" id="price" onblur="checkPrice(this)"><span class="error1" style="display: none;color: red">请输入正确的委托价格!</span><br><br>-->
+    <!--<label>卖出量:</label><input type="text" id="number" onblur="checkNum(this)" placeholder="最大卖出量{$user['available']}"><span class="error2" style="display: none;color: red">请输入正确的委托量!</span><br><br>-->
+
+    <!--&lt;!&ndash;<label>资金密码:</label><input type="password" id="pass"  onkeyup="checkPass()"><span class="error" style="display: none;color: red">错误信息</span><br><br>&ndash;&gt;-->
+    <!--<label>资金密码:</label><input type="password" id="pass"  onblur="checkPass(this)"><span class="error" style="display: none;color: red">错误信息</span><br><br>-->
+
+    <!--<label>交易额:</label><input name="total" value=""><br><br>-->
+    <!--<if condition="$Think.session.phone neq null">-->
+        <!--<button class="btn sell" data-uid="{$Think.session.phone}">卖出XYC&#45;&#45;已登录</button><br><br>-->
+    <!--<else />-->
+        <!--<button class="btn sell" data-uid="no">卖出XYC&#45;&#45;未登录</button><br><br>-->
+    <!--</if>-->
+<!--</form>-->
+<br><br><br>
+<table  width="600" border="1" cellspacing="0" cellpadding="0" style="margin: auto;text-align: center">
+    <caption>当前委托</caption>
+    <tr>
+        <th>序号</th>
+        <th>时间</th>
+        <th>类型</th>
+        <th>单价</th>
+        <th>委托数量</th>
+        <th>剩余数量</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+
+
+
+    <volist name="results" id="row">
+        <tr>
+            <td>{$i}</td>
+            <td>{$row['time']|date="Y/m/d H:i:s",###}</td>
+            <td>{$row['type']}</td>
+            <td>{$row['price']}</td>
+            <td>{$row['number']}</td>
+            <td>{$row['balance']}</td>
+            <td>{$row['status']}</td>
+            <td><a  href="javascript:void(0)" onclick="cancelDelegate({$row['id']})">取消</a></td>
+        </tr>
+    </volist>
+
+</table>
+<br><br><br><br>
+<table  width="" border="1" cellspacing="0" cellpadding="0" style="margin: auto;text-align: center">
+    <caption>历史委托</caption>
+    <tr>
+        <th>序号</th>
+        <th>时间</th>
+        <th>类型</th>
+        <th>单价</th>
+        <th>委托数</th>
+        <th>成交量</th>
+        <th>平均成交价</th>
+        <th>成交额</th>
+        <th>状态</th>
+    </tr>
+    <volist name="oldResults" id="row">
+        <tr>
+            <td>{$i}</td>
+            <td>{$row['time']|date="Y-m-d H:i:s",###}</td>
+            <td>{$row['type']}</td>
+            <td>{$row['price']}</td>
+            <td>{$row['number']}</td>
+            <td>{$row['trading']}</td>
+            <td>{$row['average']}</td>
+            <td>{$row['turnover']}</td>
+            <td>{$row['status']}</td>
+        </tr>
+    </volist>
+
+</table>
+<br><br><br><br>
+<table  width="" border="1" cellspacing="0" cellpadding="0" style="margin: auto;text-align: center">
+    <caption>交易记录</caption>
+    <tr>
+        <th>序号</th>
+        <th>时间</th>
+        <th>类型</th>
+        <th>委托价</th>
+        <th>交易价</th>
+        <th>数量</th>
+        <th>手续费</th>
+    </tr>
+    <volist name="tradeResults" id="row">
+        <tr>
+            <td>{$i}</td>
+            <td>{$row['time']|date="Y-m-d H:i:s",###}</td>
+            <td>{$row['type']}</td>
+            <td>{$row['delegateprice']}</td>
+            <td>{$row['tradeprice']}</td>
+            <td>{$row['number']}</td>
+            <td>{$row['fee']}</td>
+        </tr>
+    </volist>
+
+</table>
+
+</body>
+<script>
+    function cancelDelegate(e) {
+        var url = "{:U('/cancelOrder')}";
+        data = {
+            id : e
+        };
+        $.ajax({
+            url : url,
+            type : 'get',
+            data : data,
+            dataType : 'json',
+            success : function (resp) {
+                if(resp.error == 0){
+                    alert(resp.message);
+                    window.location.href = "{:U('/trade')}";
+                }else {
+                    alert(resp.message);
+                    window.location.href = "{:U('/trade')}";
+                }
+            }
+        });
+
+        return false;
+    }
+</script>
+<script>
+    function checkPass(e) {
+
+        var pass = e.value;
+        if(pass != ''){
+            var data = {
+                moneyPwd : pass
+            };
+            var url = "{:U('/checkPwd')}";
+            $.ajax({
+                url : url,
+                type :'post',
+                data : data,
+                dataType:'json',
+                success:function (resp) {
+                    if (resp.error == 0) {
+                        // 资金密码正确
+                        $('.error').css('display','none');
+//                        $('.error').css({"display":"block","color":"green"}).text(resp.message);
+//                    alert(resp.message);
+                    }else{
+                        // 资金密码错误
+
+                        $('.error').css({"display":"block","color":"red"}).text(resp.message);
+                        e.focus();
+//                    alert(resp.message);
+                    }
+                }
+            });
+        }else {
+            $('.error').css({"display":"none"});
+        }
+
+    }
+
+    // 验证价格是否正确
+    function checkPrice(e) {
+        if(!(/^(?:\d+|\d+\.\d{0,2})$/.test(e.value)) && e.value != ''){
+            $('.error1').css('display','block');
+            e.focus();
+        }else {
+            $('.error1').css('display','none');
+        }
+
+    }
+
+    // 验证数量是否正确
+    function checkNum(e) {
+        if(!(/^[0-9]*$/.test(e.value))){
+            $('.error2').css('display','block');
+            e.focus();
+        }else {
+            $('.error2').css('display','none');
+        }
+    }
+
+</script>
+<script>
+    $(function(){
+        $('.buy').click(function(){
+
+            if($('.buy').data('uid') == 'no'){
+                alert('请先登录,再进行交易!');
+                window.location.href = "{:U('/login')}";
+                return false;
+            }
+            var price = $('#price').val();
+            var number = $('#number').val();
+            if(price == ''){
+                alert('请指定买入价格');
+                $('#price').focus();
+            }else if(number == ''){
+                alert('请指定买入数量');
+                $('#number').focus();
+            }/*else if($('#pass').val() == ''){
+                alert('请输入资金密码!');
+                $('#pass').focus();
+            }*/else{
+                var data = {
+                    price : price,
+                    number : number
+                };
+                var url = "{:U('/buy')}";
+
+                $.ajax({
+                    url: url,
+                    type:'post',
+                    data:data,
+                    dataType:'json',
+                    success:function(resp){
+                        if (resp.error == 0) {
+                        //console.log(resp.errorInfo);
+                            alert(resp.message);
+                            window.location.href = "{:U('/trade')}";
+                        }else{
+                            alert(resp.message);
+                            window.location.href = "{:U('/trade')}";
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
+<script>
+    $(function(){
+        $('.sell').click(function(){
+
+            if($('.sell').data('uid') == 'no'){
+                alert('请先登录,再进行交易!');
+                window.location.href = "{:U('/login')}";
+                return false;
+            }
+            var uid = $('.sell').data('uid');
+            var price = $('#price').val();
+            var number = $('#number').val();
+            if(price == ''){
+                alert('请指定卖出价格');
+                $('#price').focus();
+            }else if(number == ''){
+                alert('请指定卖出数量');
+                $('#number').focus();
+            }else{
+                var data = {
+                    uid : uid,
+                    price : price,
+                    number : number
+                };
+                var url = "{:U('/sell')}";
+
+                $.ajax({
+                    url: url,
+                    type:'post',
+                    data:data,
+                    dataType:'json',
+                    success:function(resp){
+                        if (resp.error == 0) {
+                            //console.log(resp.errorInfo);
+                            alert(resp.message);
+                            window.location.href = "{:U('/trade')}";
+                        }else{
+
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
+</html>

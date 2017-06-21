@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.css"/>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/bootstrap.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/extendPagination.js"></script>
+</head>
+<body>
+    <table  width="1000" border="1" cellspacing="0" cellpadding="0" style="margin:0 auto;text-align: center">
+        <h2 style="margin: 0 auto;text-align: center">轩辕币管理中心</h2>
+        <tr>
+            <th>序号</th>
+            <th>币编号</th>
+            <th>所属用户ID</th>
+            <th>所属用户名</th>
+            <th>币分类</th>
+            <th>币状态</th>
+            <th>操作</th>
+        </tr>
+        <volist name="coins" id="coin">
+            <tr>
+                <td>{$i}</td>
+                <td>{$coin.sign}</td>
+                <td>{$coin.uid}</td>
+                <td>{$coin.phone}</td>
+                <td>{$coin.type}</td>
+                <td>{$coin.status}</td>
+                <td>&nbsp;</td>
+            </tr>
+        </volist>
+    </table>
+    <div class="pagination">
+        　　<ul>
+        <li>{$pages}</li>
+    </ul>
+    </div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>修改手机号</title>
+    <link rel="stylesheet" href="__PUBLIC__/home/css/common.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/home/css/modify.css"/>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="mainbox">
+        <div class="left hd-1">
+            <a href="#"><img src="__PUBLIC__/home/images/logo.png" alt="" width="100%" height="100%"/></a>
+        </div>
+        <h2>修改绑定手机</h2>
+        <div class="right hd-3">
+            <a href="{:U('/basicInformation')}">用户信息</a><a href="{:U('/loginOut')}">退出</a>  | <a href="{:U('/index')}">首页</a>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="hd-4">
+        <div class="hd-5"><a href="{:U('/basicInformation')}">安全设置</a> > 修改绑定手机</div>
+        <div class="form">
+            <p>您正在为账户 <span id="phone">{$oldPhone}</span> 修改绑定手机</p>
+            <form id="myform">
+                <p><label>原手机号码</label>&nbsp; <span class="phone"></span></p>
+                <p><label>所在地</label>
+                    <select name="region" id="">
+                        <option value="中国">中国</option>
+                        <option value="美国">美国</option>
+                        <option value="日本">日本</option>
+                    </select></p>
+                <p><label>手机号码</label> <input type="text" name="phone" id="newPhone"/></p>
+                <p><label>验证码</label> <input type="text" name="verify"/>
+                    <img src="{:U('/verify')}" alt="" onclick="this.src=this.src+'?'+Math.random();"></p>
+                <p><label>短信验证码</label> <input type="text" name="message"/>
+                    <button id="btn-send" type="button">点击获取</button></p>
+                <hr/>
+                <div id="error4"></div>
+                <p><label>&nbsp;</label><input type="button" class="submit" value="确认" id="submit1"/></p>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="footer" id="footer1">
+    <hr/>
+    <div>
+        Copyright &copy;  2016海南朗基共享网络竞技有限公司  沪ICP备06007462号-1
+    </div>
+</div>
+<!--手机号隐藏中间四位-->
+<script>
+    $(function() {
+        var phone = $('#phone').text();
+        var mphone = phone.substr(0, 3) + '****' + phone.substr(7);
+        $('#phone').text(mphone);
+        $('.phone').text(mphone);
+    });
+</script>
+
+<!--前台发送手机验证-->
+<script type="text/javascript">
+    var wait=3;
+    function time(o) {
+        if (wait == 0) {
+            o.removeAttribute("disabled");
+            o.innerHTML="点击获取";
+            wait = 3;
+        } else {
+            o.setAttribute("disabled", true);
+            o.innerHTML="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {
+                        time(o)
+                    },
+                    1000)
+        }
+    }
+    document.getElementById("btn-send").onclick=function(){time(this);}
+</script>
+
+<script type="text/javascript">
+    $('#btn-send').click(function(){
+        var phone = $.trim($('#newPhone').val());
+        $.post("{:U('/sendMessage')}", {'phone':phone},function(res){
+            if (res) {
+                this.click=function(){time(this)};
+                alert('发送成功');
+            } else {
+                alert('发送失败,请输入正确手机号');
+            }
+        },'json');
+    });
+</script>
+
+
+<script>
+    function checkNull(){
+        var phone=$("input[name=phone]").val();
+        var verify=$("input[name=verify]").val();
+        var message=$("input[name=message]").val();
+        if(phone==''){
+            document.getElementById("error4").innerHTML="<span class='error'>请输入手机号码!</span>"
+            return false;
+        }
+        if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(phone))){
+            document.getElementById("error4").innerHTML="<span class='error'>手机号格式错误!</span>"
+            return false;
+        }
+        if(verify==''){
+            document.getElementById("error4").innerHTML="<span class='error'>请输入验证码!</span>"
+            return false;
+        }
+        if(message==''){
+            document.getElementById("error4").innerHTML="<span class='error'>请输入短信验证码!</span>"
+            return false;
+        }
+    }
+</script>
+<script>
+    $(function(){
+        $("#submit1").click(function(){
+            if(checkNull()==false){
+                return false;
+            }
+            $.post({
+                url:"{:U('/modifyPhone')}",
+                data:$('#myform').serialize(),
+                success:function(res){
+                    if(res.error==0){
+                        location.href="{:U('/basicInformation')}";
+                    }else{
+                        document.getElementById("error4").innerHTML="<span class='error'>"+res.message+"</span>";
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

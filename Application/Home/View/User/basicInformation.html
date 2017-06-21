@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<h1>基本信息</h1>
+
+<hr/>
+<a href="{:U('/loginOut')}">注销</a> | <a href="{:U('/trade')}">去交易</a>
+<hr/>
+<table border="1">
+    <tr>
+        <td>真实姓名</td>
+        <td colspan="2">
+            <if condition="$isRz eq 1">
+                {$realName}
+            <else />
+                未认证 <a href="{:U('realName')}">去认证?</a>
+            </if>
+        </td>
+    </tr>
+    <tr>
+        <td>账户名</td>
+        <td>
+            <if condition="$isBindEmail eq 1">
+                {$email}<a href="{:U('bindEmail')}">更改邮箱?</a>
+                <else />
+                <a href="{:U('bindEmail')}">绑定邮箱?</a>
+            </if>
+        </td>
+        <td>
+            {$phone}<a href="{:U('modifyPhone')}">修改手机号?</a>
+        </td>
+    </tr>
+    <tr>
+        <td>UID</td>
+        <td>{$uid}</td>
+    </tr>
+    <tr>
+        <td>登录密码重置</td>
+        <td><a href="{:U('modifyPwd')}">重置</a></td>
+    </tr>
+    <tr>
+        <td>资金密码设置</td>
+        <td>
+
+            <if condition="$isMoneyPwd eq 0">
+                未设置 <a href="{:U('modifyMoneyPwd')}">去设置?</a>
+                <else />
+                已设置 <a href="{:U('modifyMoneyPwd')}">重置?</a>
+            </if>
+        </td>
+    </tr>
+    <tr>
+        <td>收货地址</td>
+        <td>
+            <if condition="$place eq NULL">
+            未设置 <a href="{:U('place')}">去设置?</a>
+            <else />
+            {$place} <a href="{:U('place')}"> 修改地址</a>
+            </if>
+        </td>
+    </tr>
+    <tr>
+        <td>上次登录时间</td>
+        <td>
+            <if condition="$lastLoginTime eq 0">
+                欢迎第一次登录
+                <else />
+                {$lastLoginTime}
+            </if>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,164 @@
+body{
+    font-family: 'MICROSOFT YAHEI';
+    line-height: 200%;
+    background: #f5f5f5;
+    color: #999999;
+}
+hr{
+    color: #999999;
+}
+input,select{
+    width: 239px;
+    height: 36px;
+    border: 1px solid #bababa;
+    margin-left: 5px;
+}
+input[name=verify],input[name=message]{
+    width: 135px;
+}
+.top{width: 100%;border-bottom: 1px solid #ccc;}
+.top .hd-1{width: 20%;overflow: hidden;margin-top: 16px}
+
+.top h2{font-size: 22px; height: 40px;line-height: 40px;border-left: 2px solid #bababa;padding: 0 10px; float: left;margin: 38px 0 0 14px;color: #999;font-weight: 400;}
+.hd-2{line-height: 30px;padding-top: 45px;}
+.hd-2 a{padding-left: 14px;color: #999;}
+.hd-3{line-height: 30px;padding-top: 45px;color: #999}
+.hd-3 a{padding: 10px;color: #999;}
+.borderbox{width: 40%;margin: 0 auto;overflow: hidden}
+.main{
+    margin-top: 42px;
+    color: #999999;
+
+}
+.main .nav{
+    width: 100%;
+    height: 78px;
+}
+.main .hd-4{
+    width: 40%;
+    margin: 80px auto;
+}
+.hd-5{
+    background-color: #fffaf4;
+}
+.hd-5 a{
+    color: #6d8bd5;
+}
+.main .nav h3{font-size: 17px; height: 38px;line-height: 40px;padding: 0 10px; float: left;margin: 38px 9% 0 9%;color: #999;font-weight: 600;}
+.main .nav .boom{color: #000000}
+
+.main .form{
+    margin-top: 40px;
+    padding: 29px;
+    border: 1px solid #cccccc;
+}
+.main .form p span{
+    color: #ff0000;
+}
+p{
+    font-size: 14px;
+    color: #4d4d4d;
+    margin-bottom: 25px;
+}
+
+
+.m-t1{
+    margin-top: 30px;
+}
+label{
+    font-size: 14px;
+    color: #777777;
+    text-align: right;
+    width: 200px;
+}
+#myform label{width: 100px;display: inline-block;text-align: right;margin-right: 10px;}
+.main .form .submit{
+    text-align: center;
+    border: none;
+    background-color: #ff6000;
+    color: #ffffff;
+    width: 142px;
+    height: 28px;
+    margin-top: 5px;
+}
+#submit1{
+    margin-top: 20px;
+}
+.m-p-s{
+    margin-top: 20px;
+}
+#verify,#message{
+    width: 135px;
+}
+#btn-send{
+    width: 87px;
+    height: 26px;
+    border: 1px solid #cccccc;
+    background-color: #f5f5f5;margin-left: 14px;
+}
+.main .form #error1{
+    margin-top: -25px;
+    height: 25px;
+    margin-left: 30px;
+}
+.main .form #error2{
+     margin-top: -25px;
+     height: 25px;
+     margin-left: 25px;
+ }
+.main .form #error3{
+    margin-top: -25px;
+    height: 25px;
+    margin-left: 30px;
+}
+.main .form #error4{
+    height: 25px;
+    margin-left: 23px;
+}
+.main .form #error5{
+    height: 25px;
+    margin-left: 38px;
+}
+.main .form .error{
+    font-size: 13px;
+    color:#ff0000;
+    margin-left: 45px;
+
+}
+.m-t2{
+    margin-top: 40px;
+    background-color: #f6f7fb;
+    height: 63px;
+    width: 50%;
+    margin-left: 15%;
+}
+.m-t2 img{
+    margin-left: 25%;
+    margin-top: 13px;
+    float: left;
+}
+.m-t2 span{
+    margin-left: 6px;
+    display: block;
+    float: left;
+    margin-top: 15px;
+}
+.m-t3{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+.m-t3 a{
+    color: #ff6600;
+}
+.footer{
+    height: 40px;
+    width: 62%;
+    margin: 250px auto 0 auto;
+}
+#footer1{
+    margin-top: 110px;
+}
+#footer2{
+    margin-top: 150px;
+}

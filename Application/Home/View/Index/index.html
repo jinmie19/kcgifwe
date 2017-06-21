@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$name}</title>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<form action="" method="">
+    <span>验证码：</span><input type="text" name="verify" >
+    <img src="{:U('\verify')}" alt="" onclick="this.src=this.src+'?'+Math.random();">
+    <button type="submit">提交验证</button>
+</form>
+
+</body>
+<script>
+
+
+</script>
+</html>

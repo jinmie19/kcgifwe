@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+*{margin:0;padding:0;}
+.clear{clear:both;}
+body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tr, th, td, input, button,strong {
+    margin: 0px;
+    padding: 0px;
+    border: 0px none;
+    outline: 0px none;
+    font-weight: normal;
+}
+i,em,b{font-style:normal;}
+h1,h2,h3,h4,h5,h6{font-style: normal;}
+
+body{font-family:"Microsoft YaHei", "SimSun", Arial, Helvetica, sans-serif;background:#fff;}
+img{border:0;}
+ol,ul,li,dl,dt,dd{list-style:none;}
+a{color:#333; text-decoration:none;}
+a:link,a:visited{color:#333;text-decoration:none}
+a:active,a:hover{color:#333;text-decoration:none}
+* html .cc {height: 1%;}
+input{font-family:"Microsoft YaHei";outline: none;}
+a, a > * {
+    -webkit-transition: color 0.3s ease, background-color 0.3s ease, border 0.3s ease, opacity 0.3s ease-in-out;
+    -moz-transition: color 0.3s ease, background-color 0.3s ease, border 0.3s ease, opacity 0.3s ease-in-out;
+    -ms-transition: color 0.3s ease, background-color 0.3s ease, border 0.3s ease, opacity 0.3s ease-in-out;
+    -o-transition: color 0.3s ease, background-color 0.3s ease, border 0.3s ease, opacity 0.3s ease-in-out;
+    transition: color 0.3s ease, background-color 0.3s ease, border 0.3s ease, opacity 0.3s ease-in-out;
+}
+
+
+.right{float: right;}
+.left{float: left;}
+.mainbox{width: 1200px;margin: 0 auto;overflow: hidden}
+input,select{vertical-align:middle;}
+select {
+    border: solid 1px #000;
+
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+
+    padding-right: 14px;
+
+    background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
+
+}
+
+
+select::-ms-expand { display: none; }

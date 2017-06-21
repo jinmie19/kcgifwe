@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轩辕币注册</title>
+    <link rel="stylesheet" href="__PUBLIC__/home/css/common.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/home/css/login.css"/>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+
+<div class="top">
+    <span class="hd-1"><img src="__PUBLIC__/home/images/logo.png" /></span>
+    <span class="hd-2"><a href="#">首页</a> | <a href="#">客服咨询</a></span>
+</div>
+
+<div class="main">
+    <div class="form" id="form">
+        <p class="form-title">手机注册</p>
+        <form id="myform">
+            <hr/>
+            <select name="region" id="">
+                <option value="中国"> &nbsp;中国</option>
+                <option value="美国"> &nbsp;美国</option>
+                <option value="日本"> &nbsp;日本</option>
+            </select>
+            <hr/>
+            <input type="text" name="phone" placeholder="手机号" id="phone"/><br/>
+            <hr/>
+            <input type="text" name="verify" placeholder="验证码" id="verify"/>
+            <img src="{:U('/verify')}" alt="" onclick="this.src=this.src+'?'+Math.random();" class="right"><br/>
+            <hr/>
+            <input type="text" name="message" placeholder="短信验证码" id="message"/><button id="btn-send" type="button" class="right">点击获取</button><br/>
+            <hr/>
+            <input type="password" name="password" placeholder="密码"/><br/>
+            <hr/>
+            <input type="password" name="repassword" placeholder="确认密码"/><br/>
+            <hr/>
+            <input type="text" name="mediumer" placeholder="所属会员编号"/><br/>
+            <hr/>
+            <div id="error"></div>
+            <br/>
+            <p class="tips"><span>提示：</span>建议使用本人实名登记的手机号，如果不使用因此而产生的一切风险和损失，本平台不予承担</p><br/>
+            <p class="read"><input type="checkbox" name="checkbox" id="checkbox" onclick="changeClass()"> 我已阅读并同意 <a href="#">《轩辕币用户协议》</a></p><br/>
+            <input type="button" value="注册" class="dissubmit" name="register" id="register"/>
+        </form>
+        <div class="destrict-login"><a href="{:U('/login')}">直接登录</a></div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="footer1"><img src="__PUBLIC__/home/images/login-safe.png" /><span> &nbsp;安全</span></div>
+    <div class="footer2"><img src="__PUBLIC__/home/images/login-profession.png" /><span> &nbsp;专业</span></div>
+    <div class="footer3"><img src="__PUBLIC__/home/images/login-quick.png" /><span> &nbsp;快速</span></div>
+    <div class="footer4">
+        <hr style="margin-top: -2px;margin-bottom: -10px"/>
+        <br/>京CP备 20140808号 | 朗基共享版权所有2014-<?=date("Y",time());?></div>
+</div>
+
+
+
+
+<!--前台CheckBox验证-->
+<script>
+    function changeClass(){
+        var checkbox=document.getElementById('checkbox').checked;
+        var register=document.getElementById('register');
+        if(checkbox){
+            register.className='submit';
+        }else{
+            register.className='dissubmit';
+
+            return false;
+        }
+    }
+</script>
+
+<!--前台发送手机验证-->
+<script type="text/javascript">
+    var wait=3;
+    function time(o) {
+        if (wait == 0) {
+            o.removeAttribute("disabled");
+            o.innerHTML="点击获取";
+            wait = 3;
+        } else {
+            o.setAttribute("disabled", true);
+            o.innerHTML="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {
+                        time(o)
+                    },
+                    1000)
+        }
+    }
+    document.getElementById("btn-send").onclick=function(){time(this);}
+</script>
+
+<script type="text/javascript">
+    $('#btn-send').click(function(){
+        var phone = $.trim($('#phone').val());
+        $.post("{:U('/sendMessage')}", {'phone':phone},function(res){
+            if (res) {
+                this.click=function(){time(this)};
+                alert('发送成功');
+            } else {
+                alert('发送失败,请输入正确手机号');
+            }
+        },'json');
+    });
+</script>
+
+
+<!--前台验证数据-->
+<script>
+    function checkReg(){
+        var phone=$("input[name=phone]").val();
+        var verify=$("input[name=verify]").val();
+        var message=$("input[name=message]").val();
+        var password=$("input[name=password]").val();
+        var repassword=$("input[name=repassword]").val();
+        var mediumer=$("input[name=mediumer]").val();
+        if(phone==''){
+            document.getElementById("error").innerHTML="<span class='error'>请输入手机号码!</span>"
+            return false;
+        }
+        if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(phone))){
+            document.getElementById("error").innerHTML="<span class='error'>手机号格式错误!</span>"
+            return false;
+        }
+        if(verify==''){
+            document.getElementById("error").innerHTML="<span class='error'>请输入验证码!</span>"
+            return false;
+        }
+        if(message==''){
+            document.getElementById("error").innerHTML="<span class='error'>请输入短信验证码!</span>"
+            return false;
+        }
+        if(password==''){
+            document.getElementById("error").innerHTML="<span class='error'>请输入密码!</span>"
+            return false;
+        }
+        if(repassword==''){
+            document.getElementById("error").innerHTML="<span class='error'>请确认密码!</span>"
+            return false;
+        }
+        if(password!=repassword){
+            document.getElementById("error").innerHTML="<span class='error'>两次密码不一致!</span>"
+            return false;
+        }
+        if(mediumer==''){
+            document.getElementById("error").innerHTML="<span class='error'>请输入正确所属会员编号!</span>"
+            return false;
+        }
+
+    }
+</script>
+
+<script>
+    $(function(){
+        $("#register").click(function(){
+            if(changeClass()==false){
+                return false;
+            }
+            if(checkReg()==false){
+                return false;
+            }
+            $.post({
+                url:"{:U('/register')}",
+                data:$('#myform').serialize(),
+                success:function(res){
+                    if(res.error==0){
+                        location.href="{:U('/login')}";
+                    }else{
+                        document.getElementById("error").innerHTML="<span class='error'>"+res.message+"</span>";
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

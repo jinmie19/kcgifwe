@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css"/>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<table  width="1000" border="1" cellspacing="0" cellpadding="0" style="margin: auto;text-align: center">
+    <h2>栏目管理中心</h2>
+    <tr>
+        <th>序号</th>
+        <th>栏目名称</th>
+        <th>栏目类型</th>
+        <th>创建时间</th>
+        <th>排序</th>
+        <th>栏目级别</th>
+        <th>父级栏目</th>
+        <th>关键字</th>
+        <th>栏目描述</th>
+        <th>操作</th>
+    </tr>
+<volist name="results" id="row">
+    <tr>
+        <td>{$row.id}</td>
+        <td>{$row.name}</td>
+        <td>{$row.type}</td>
+        <td>{$row.time|date="Y-m-d H:i:s",###}</td>
+        <td><button class="btn btn-default">{$row.sort}</button>
+            <a href="javascript:" class="btn btn-primary" id="btn1" onclick="cate({$row.id},1)">上升</a>
+            <a href="javascript:" class="btn btn-primary" id="btn2" onclick="cate({$row.id},0)">下降</a>
+        </td>
+        <td>
+            <if condition="$row.level eq 0">
+                一级栏目
+                <else /> 二级栏目
+            </if>
+        </td>
+        <td>
+            <volist name="results" id="rows">
+                <eq name="row.parent" value="$rows.id">
+                   {$rows.name}
+                </eq>
+                </if>
+            </volist>
+        </td>
+        <td>{$row.keyword}</td>
+        <td>{$row.description}</td>
+        <td><a href={:U("/cateUpdate?id=$row[id]")} class="btn btn-primary">编辑</a>
+            <a href="javascript:" class="btn btn-danger art-del" onclick="delCate({$row.id})" data-aid="{$row.id}">删除</a>
+        </td>
+    </tr>
+</volist>
+    <tr>
+        <td height="21" colspan="10"><a href={:U("/cateAdd")} class="btn btn-primary" style="float: right;">新增</a></td>
+    </tr>
+</table>
+
+<script>
+    function cate(aid,status){
+        if(status==1){
+            var url="{:U('/cateUp')}";
+        }else{
+             url="{:U('/cateDown')}";
+        }
+        $.ajax({
+            url:url,
+            type:'get',
+            data:{id:aid},
+            dataType:'json',
+            success:function(res){
+                if(res.error==0){
+                    alert(res.message);
+                    window.location.href = "{:U('/category')}";
+                }else{
+                    alert(res.message);
+                    window.location.href = "{:U('/category')}";
+                }
+            }
+        })
+    }
+
+</script>
+<script>
+    function delCate(aid){
+        if(confirm("确定删除栏目?")){
+            var url="{:U('/cateDelete')}";
+            $.ajax({
+                url:url,
+                type:'post',
+                data:{id:aid},
+                dataType:'json',
+                success:function(res){
+                    if(res.error==0){
+                        alert(res.message);
+                        window.location.href = "{:U('/category')}";
+                    }else{
+                        alert(res.message);
+                        window.location.href = "{:U('/category')}";
+                    }
+                }
+            })
+        }else{
+            window.location.href = "{:U('/category')}";
+        }
+
+    }
+</script>
+</body>
+</html>

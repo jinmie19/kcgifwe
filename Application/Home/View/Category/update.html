@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<form style="text-align: center;width:550px; margin:0 auto;border: 1px solid black;margin-top: 50px;" action="{:U('/cateUpdate')}" method="post">
+    <label>栏目名称:</label><input type="text" name="name" value="{$result.name}" id="name"/><br/><br/>
+
+    <label>栏目类型:</label>
+    <select name="type" id="type" style="width: 160px">
+        <option value="1" <if condition="$result.type eq '内容'">selected </if>>内容</option>
+        <option value="2" <if condition="$result.type eq '列表'">selected </if>>列表</option>
+        <option value="3" <if condition="$result.type eq '图文'">selected </if>>图文</option>
+    </select><br/><br/>
+
+    <label>父级栏目:</label>
+    <select name="parent" id="parent" style="width: 160px">
+        <option value="0" <if condition="$result.parent eq 0">selected</if> > 一级分类</option>
+        <volist name="results" id="row">
+            <if condition="$row.level eq 0">
+                <option value="{$row.id}" <eq name="row.id" value="$result.parent">selected</eq> >{$row.name}</option>
+            </if>
+        </volist>
+    </select><br/><br/>
+
+    <label>SEO标题:</label><input type="text" name="title" value="{$result.title}" id="title"/><br/><br/>
+    <label>SEO关键字:</label><input type="text" name="keyWord" value="{$result.keyword}" id="keyWord"/><br/><br/>
+    <label>SEO描述:</label><input type="text" name="description" value="{$result.description}" id="description"/><br/><br/>
+    <input type="hidden" name="id" value="{$result.id}" id="id"/>
+    <input type="submit" id="btn-btn"/>
+</form>
+
+<script>
+    function check(){
+        if($('#name').val() == ''){
+            alert('请输入栏目名称');
+            return false;
+        }else if($('#title').val() == ''){
+            alert('请输入SEO标题');
+            return false;
+        }else if($('#keyWord').val() == ''){
+            alert('请输入SEO关键字');
+            return false;
+        }else if($('#description').val() == ''){
+            alert('请输入SEO描述');
+            return false;
+        }
+    }
+</script>
+
+<script>
+    $(function(){
+        $("#btn-btn").click(function(){
+            if(check()==false){
+                location.href=this.location.href;
+            }
+            if(confirm('确认修改栏目?')){
+                var id=$("#id").val();
+                var name=$("#name").val();
+                var type=$("#type").val();
+                var parent=$("#parent").val();
+                var title=$("#title").val();
+                var keyWord=$("#keyWord").val();
+                var description=$("#description").val();
+
+                var data={
+                    id:id,
+                    name:name,
+                    type:type,
+                    parent:parent,
+                    title:title,
+                    keyWord:keyWord,
+                    description:description
+                };
+
+                var url="{:U('/cateUpdate')}";
+
+                $.post({
+                    url:url,
+                    data:data,
+                    type:'post',
+                    success:function(res){
+                        if(res.error==0){
+                            alert(res.message);
+                            location.href="{:U('/category')}";
+                        }else{
+                            alert(res.message);
+                            location.href=this.location.href;
+                        }
+                    }
+                });
+            }
+            return false;
+        })
+    })
+
+</script>
+
+
+</body>
+</html>

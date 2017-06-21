@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        <if condition="$isMoneyPwd eq 0">设置资金密码<else />重置资金密码</if>
+    </title>
+    <meta charset="utf-8" content="text/html"/>
+    <link rel="stylesheet" href="__PUBLIC__/home/css/common.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/home/css/modify.css"/>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="mainbox">
+        <div class="left hd-1">
+            <a href="#"><img src="__PUBLIC__/home/images/logo.png" alt="" width="100%" height="100%"/></a>
+        </div>
+        <h2><if condition="$isMoneyPwd eq 0">设置资金密码<else />重置资金密码</if></h2>
+        <div class="right hd-3">
+            <a href="{:U('/basicInformation')}">用户信息</a><a href="{:U('/loginOut')}">退出</a>  | <a href="{:U('/index')}">首页</a>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="hd-4">
+        <div class="hd-5"><a href="{:U('/basicInformation')}">设置页面</a> > <if condition="$isMoneyPwd eq 0">设置资金密码<else />重置资金密码</if></div>
+        <div class="form">
+            <p>您正在为账户 <span id="phone">{$phone}</span> <if condition="$isMoneyPwd eq 0">设置资金密码<else />重置资金密码</if></p>
+            <form id="myform">
+                <p><label>资金密码</label><input type="text" name="moneyPwd"/></p>
+                <p><label>确认资金密码</label><input type="text" name="remoneyPwd"/></p>
+                <hr/>
+                <br/>
+                <p><label>手机号码</label>&nbsp;&nbsp;&nbsp;<span class="phone"></span></p>
+                <p><label>短信验证码</label><input type="text" name="message"/><button id="btn-send" type="button">点击获取</button></p>
+                <div id="error5"></div>
+                <p><label>&nbsp;</label><input type="button" class="submit" value="确认"/></p>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="footer" id="footer2">
+    <hr/>
+    <div>
+        Copyright &copy;  2016海南朗基共享网络竞技有限公司  沪ICP备06007462号-1
+    </div>
+</div>
+
+<script>
+    $(function() {
+        var phone = $('#phone').text();
+        var mphone = phone.substr(0, 3) + '****' + phone.substr(7);
+        $('#phone').text(mphone);
+        $('.phone').text(mphone);
+    });
+</script>
+<!--前台发送手机验证-->
+<script type="text/javascript">
+    var wait=3;
+    function time(o) {
+        if (wait == 0) {
+            o.removeAttribute("disabled");
+            o.innerHTML="点击获取";
+            wait = 3;
+        } else {
+            o.setAttribute("disabled", true);
+            o.innerHTML="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {
+                        time(o)
+                    },
+                    1000)
+        }
+    }
+    document.getElementById("btn-send").onclick=function(){time(this);}
+</script>
+
+<script type="text/javascript">
+    $('#btn-send').click(function(){
+        var phone = $.trim({$phone});
+        $.post("{:U('/sendMessage')}", {'phone':phone},function(res){
+            if (res) {
+                this.click=function(){time(this)};
+                alert('发送成功');
+            } else {
+                alert('发送失败,请输入正确手机号');
+            }
+        },'json');
+    });
+</script>
+
+<script>
+    function checkNull(){
+        var moneyPwd=$("input[name=moneyPwd]").val();
+        var remoneyPwd=$("input[name=remoneyPwd]").val();
+        var message=$("input[name=message]").val();
+        if(moneyPwd==''){
+            document.getElementById("error5").innerHTML="<span class='error'>请输入资金密码!</span>"
+            return false;
+        }
+        if(remoneyPwd==''){
+            document.getElementById("error5").innerHTML="<span class='error'>请确认资金密码!</span>"
+            return false;
+        }
+        if(moneyPwd!=remoneyPwd){
+            document.getElementById("error5").innerHTML="<span class='error'>两次密码不一致!</span>"
+            return false;
+        }
+        if(message==''){
+            document.getElementById("error5").innerHTML="<span class='error'>请输入短信验证码!</span>"
+            return false;
+        }
+    }
+</script>
+<script>
+    $(function(){
+        $(".submit").click(function(){
+            if(checkNull()==false){
+                return false;
+            }
+            $.post({
+                url:"{:U('/modifyMoneyPwd')}",
+                data:$('#myform').serialize(),
+                success:function(res){
+                    if(res.error==0){
+                        location.href="{:U('/basicInformation')}";
+                    }else{
+                        document.getElementById("error5").innerHTML="<span class='error'>"+res.message+"</span>";
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+用户{$uid}正在进行绑定邮箱操作
+<form action="{:U('bindEmail')}" method="post">
+    <table border="1">
+        <tr>
+            <td>邮箱地址</td>
+            <td><input type="email" name="email" placeholder="请输入正确邮箱" id="email"/></td>
+        </tr>
+        <tr>
+            <td>验证码</td>
+            <td>
+                <input type="text" name="verify"/><img src="{:U('verify')}" alt="" onclick="this.src=this.src+'?'+Math.random();">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                邮箱验证码
+            </td>
+            <td>
+                <input type="text" name="message" id=""><span><button id="btn" type="button">发送邮箱验证码</button></span>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="submit"></td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    var wait=3;
+    function time(o) {
+        if (wait == 0) {
+            o.removeAttribute("disabled");
+            o.innerHTML="获取邮箱验证码";
+            wait = 3;
+        } else {
+            o.setAttribute("disabled", true);
+            o.innerHTML="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {
+                        time(o)
+                    },
+                    1000)
+        }
+    }
+    document.getElementById("btn").onclick=function(){time(this);}
+</script>
+
+<!--Ajax验证发送事件-->
+<script type="text/javascript">
+    $('#btn').click(function(){
+        var email = $.trim($('#email').val());
+        $.post("{:U('sendEmail')}", {'email':email},function(res){
+            if (res) {
+                alert('发送成功');
+            } else {
+                alert('发送失败,请输入正确邮箱号');
+            }
+        },'json');
+    });
+</script>
+</body>
+</html>

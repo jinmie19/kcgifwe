@@ -1,0 +1,175 @@
+@charset "UTF-8";
+
+body{
+    background-color: #f6f7ea;
+    font-family: '΢MICROSOFT YAHEI';
+}
+.top{
+    width: 70%;
+    margin: 30px auto 15px auto;
+}
+.top .hd-1{
+    margin:13px 0 50px 166px;
+}
+.top .hd-1 img{
+    width:15%;
+    height: 15%;
+}
+.top .hd-2{
+    float: right;
+    margin-right:255px;
+    margin-top: 39px;
+    text-align: center;
+    height: 50px;
+    width: 150px;
+}
+.main{
+    background-image: url("../images/login-bg.jpg");
+    height: 630px;
+    border-bottom: 8px solid #e1e0e0;
+    border-top: 8px solid #e1e0e0;
+    width: 100%;
+    position:relative;
+}
+.main #form{
+    height: 565px;
+}
+.main .form{
+    background-color: #ffffff;
+    height: 310px;
+    width: 390px;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    opacity: 0.9
+}
+.main .form .form-title{
+    color: #333;
+    font-size: 20px;
+    margin-left: 38px;
+    margin-top: 30px;
+    margin-bottom: 25px;
+}
+input::-webkit-input-placeholder{
+    font-size: 13px;
+}
+.main .form select{
+    width: 100%;
+    height: 36px;
+    border: none;
+    text-indent: 1em;
+    font-family: '΢MICROSOFT YAHEI';
+}
+.main .form #message, .main .form #verify{
+    width:50%;
+
+}
+.main .form .tips{
+    margin-left: 35px;
+    margin-right: 35px;
+    font-size: 12px;
+    line-height: 20px;
+}
+.main .form .tips span{
+    color: #f39b65;
+}
+.main .form .read{
+    text-align: center;
+    font-size: 12px;
+}
+.main .form .read a{
+    color: #3092d0;
+}
+.main .form .right{
+    float: right;
+    margin-right: 15px;
+}
+.main .form #btn-send{
+    margin-top: 5px;
+}
+.main .form button{
+    color:#3b97d1;
+}
+.main .form input[type=text],input[type=password]{
+
+    height: 36px;
+    width: 94%;
+    border: none;
+    text-indent: 1em;
+    margin-left: 23px;
+}
+.main .form #error{
+    height: 12px;
+}
+.main .form .error{
+    font-size: 13px;
+    color:#ff0000;
+    margin-left: 37px;
+}
+.main .form hr{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.main .form .submit{
+    width: 311px;
+    height: 38px;
+    text-align: center;
+    border: none;
+    background-color: #f86a16;
+    margin-left: 40px;
+    color: #ffffff;
+}
+.main .form .dissubmit{
+    width: 311px;
+    height: 38px;
+    text-align: center;
+    border: none;
+    background-color: #f98641;
+    margin-left: 40px;
+    color: #ffffff;
+}
+.main .form .destrict-login{
+    margin-top: 15px;
+    text-align: center;
+}
+.main .form .destrict-login a{
+    color: #f98641;
+    font-weight: 600;
+}
+.main .form .form-forget{
+    margin-left: 38px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+.main .form .form-register{
+    width: 100%;
+    text-align: center;
+}
+.main .form .form-register a{
+    color: #f86a16;
+    font-weight: 600;
+}
+
+.footer{
+    height: 155px;
+    text-align: center;
+    padding-top: 22px;
+    font-size:35px;
+    color: #999999;
+    width: 70%;
+    margin: 0 auto
+}
+.footer .footer1, .footer .footer2, .footer .footer3{
+    float: left;
+    margin-left: 15%;
+ }
+
+.footer .footer4{
+    font-size: 18px;
+    color:black;
+    margin-top: 17px;
+    float: left;
+    width: 100%;
+    text-align: center;
+}

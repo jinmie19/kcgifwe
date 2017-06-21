@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title></title>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script><!-- 必须jq -->
+    <script type="text/javascript" src="__PUBLIC__/plupload/plupload.full.min.js"></script>
+</head>
+<body>
+<form action="{:U('realName')}" enctype="multipart/form-data" method="post" >
+<div>用户 <span style="color: red;">{$uid}</span>正在进行实名认证</div>
+    <br/>
+    <input type="text" name="realName" placeholder="请填写真实姓名"/><br/><br/>
+    <input type="hidden"  id="phone" value="{$phone}"/>
+    <select name="idType" id="idType">
+        <option value="1">身份证</option>
+        <option value="2">护照</option>
+        <option value="3">其他</option>
+    </select>
+    <br/><br/>
+    <input type="text" name="idNumber" placeholder="请填写证件号码"/><br/><br/>
+
+    <button class="btn" id="btn" onclick="upload()">上传图片</button>
+    <div id="div1"></div>
+
+    <input type="text" name="message" id="">  <span><button id="btn2" type="button">免费发送验证码</button></span><br/><br/>
+    <div style="float: left"><input type="submit"/></div>
+
+
+
+</form>
+<script>
+    function upload(){
+        $.ajax({
+            url : "{:U('/upload')}",
+            type :'post',
+            dataType:'json',
+            success:function (resp) {
+                if (resp.error == 0) {
+                    var span=
+                }else{
+
+                }
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    var wait=3;
+    function time(o) {
+        if (wait == 0) {
+            o.removeAttribute("disabled");
+            o.innerHTML="免费发送验证码";
+            wait = 3;
+        } else {
+            o.setAttribute("disabled", true);
+            o.innerHTML="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {
+                        time(o)
+                    },
+                    1000)
+        }
+    }
+    document.getElementById("btn2").onclick=function(){time(this);}
+</script>
+
+<!--Ajax验证发送事件-->
+<script type="text/javascript">
+    $('#btn2').click(function(){
+        var phone = $.trim($('#phone').val());
+        $.post("{:U('/sendMessage')}", {'phone':phone},function(res){
+            if (res) {
+                alert('发送成功');
+            } else {
+                alert('发送失败,请输入正确手机号');
+            }
+        },'json');
+    });
+</script>
+</body>
+</html>

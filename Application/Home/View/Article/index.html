@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css"/>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <table  width="1000" border="1" cellspacing="0" cellpadding="0" style="margin: auto;text-align: center">
+        <tr>
+            <th>序号</th>
+            <th>所属栏目</th>
+            <th>来源</th>
+            <th>排序</th>
+            <th>文章标题</th>
+            <th>文章简介</th>
+            <th>文章内容</th>
+            <th>浏览次数</th>
+            <th>形象图</th>
+            <th>作者</th>
+            <th>创建时间</th>
+            <th>更新时间</th>
+            <th>SEO标题</th>
+            <th>SEO关键字</th>
+            <th>SEO描述</th>
+            <th>操作</th>
+        </tr>
+        <volist name="results" id="row">
+            <tr>
+                <td>{$i}</td>
+                <volist name="cates" id="cate">
+                    <eq name="row.parent" value="$cate.id">
+                        <td>{$cate.name}</td>
+                    </eq>
+                </volist>
+                <td>{$row.source}</td>
+                <td>{$row.sort}
+                    <a href="javascript:" class="btn btn-primary" id="btn1" onclick="art({$row.id},1)">上升</a>
+                    <a href="javascript:" class="btn btn-primary" id="btn2" onclick="art({$row.id},0)">下降</a>
+                </td>
+                <td>{$row.name}</td>
+                <td>{$row.intro}</td>
+                <td>{$row.content}</td>
+                <td>{$row.count}</td>
+                <td>{$row.img}</td>
+                <td>{$row.author}</td>
+                <td>{$row['created']|date="Y-m-d",###}</td>
+                <td>{$row.updated|date="Y-m-d H:i:s",###}</td>
+                <td>{$row.title}</td>
+                <td>{$row.keyword}</td>
+                <td>{$row.description}</td>
+                <td>
+                    <a href={:U("/artUpdate?id=$row[id]")} class="btn btn-primary">编辑</a>
+                    <a href="javascript:" class="btn btn-danger art-del" data-aid="{$row.id}" onclick="delArt({$row.id})">删除</a>
+
+                </td>
+            </tr>
+        </volist>
+        <tr>
+            <td colspan="16">
+                <a href={:U("/artAdd")} class="btn btn-primary" style="float: right;">新增</a>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        function art(aid,status){
+            if(status==1){
+                var url="{:U('/artUp')}";
+            }else{
+                url="{:U('/artDown')}";
+            }
+            $.ajax({
+                url:url,
+                type:'get',
+                data:{id:aid},
+                dataType:'json',
+                success:function(res){
+                    if(res.error==0){
+                        alert(res.message);
+                        window.location.href = "{:U('/article')}";
+                    }else{
+                        alert(res.message);
+                        window.location.href = "{:U('/article')}";
+                    }
+                }
+            })
+        }
+
+    </script>
+    <script>
+        function delArt(aid){
+            if(confirm("确定删除文章?")){
+                var url="{:U('/artDelete')}";
+                $.ajax({
+                    url:url,
+                    type:'post',
+                    data:{id:aid},
+                    dataType:'json',
+                    success:function(res){
+                        if(res.error==0){
+                            alert(res.message);
+                            window.location.href = "{:U('/article')}";
+                        }else{
+                            alert(res.message);
+                            window.location.href = "{:U('/article')}";
+                        }
+                    }
+                })
+            }else{
+                window.location.href = "{:U('/article')}";
+            }
+
+        }
+    </script>
+
+</body>
+</html>

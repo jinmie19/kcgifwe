@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<form action="{:U('place')}" method="post">
+    <table border="1">
+        <if condition="$place eq null">
+            <else />
+            <tr>
+                <td>历史收货地址</td>
+                <td>{$place}</td>
+            </tr>
+        </if>
+        <tr>
+            <td>现收货地址</td>
+            <td><input type="text" name="place"/></td>
+        </tr>
+        <tr>
+            <td>手机号</td>
+            <td>{$phone}
+                <input type="hidden"  id="phone" value="{$phone}"/></td>
+        </tr>
+        <tr>
+            <td>短信验证码:</td>
+            <td> <input type="text" name="message" id=""><span><button id="btn" type="button">免费发送验证码</button></span></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit"/></td>
+        </tr>
+
+    </table>
+</form>
+<script type="text/javascript">
+    var wait=3;
+    function time(o) {
+        if (wait == 0) {
+            o.removeAttribute("disabled");
+            o.innerHTML="免费发送验证码";
+            wait = 3;
+        } else {
+            o.setAttribute("disabled", true);
+            o.innerHTML="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {
+                        time(o)
+                    },
+                    1000)
+        }
+    }
+    document.getElementById("btn").onclick=function(){time(this);}
+</script>
+
+<!--Ajax验证发送事件-->
+<script type="text/javascript">
+    $('#btn').click(function(){
+        var phone = $.trim($('#phone').val());
+        $.post("{:U('sendMessage')}", {'phone':phone},function(res){
+            if (res) {
+                alert('发送成功');
+            } else {
+                alert('发送失败,请输入正确手机号');
+            }
+        },'json');
+    });
+</script>
+</body>
+</html>
