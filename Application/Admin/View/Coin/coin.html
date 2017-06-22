@@ -65,43 +65,20 @@
                                     <th>币分类</th>
                                     <th>持币用户</th>
                                     <th>币状态</th>
-                                    <th>操作</th>
+                                    <!--<th>操作</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                <tr class="gradeA">
-                                    <td>1</td>
-                                    <td>XYC 10010</td>
-                                    <td>认购</td>
-                                    <td class="center">张三</td>
-                                    <td class="center">钱包中</td>
-                                    <td class="center"></td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>2</td>
-                                    <td>XYC 10086</td>
-                                    <td>挖币</td>
-                                    <td class="center">李四</td>
-                                    <td class="center">未开采</td>
-                                    <td class="center">X</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>3</td>
-                                    <td>XYC 10011</td>
-                                    <td>自留</td>
-                                    <td class="center">王五</td>
-                                    <td class="center">已提取</td>
-                                    <td class="center">X</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>4</td>
-                                    <td>XYC 75001</td>
-                                    <td>挖币</td>
-                                    <td>赵六</td>
-                                    <td>交易中</td>
-                                    <td>X</td>
-                                </tr>
+                                <volist name="list" id="row">
+                                    <tr class="gradex">
+                                        <td>{$i}</td>
+                                        <td>{$row.sign}</td>
+                                        <td>{$row.type}</td>
+                                        <td class="center">{$row.phone}</td>
+                                        <td class="center">{$row.status}</td>
+                                        <!--<td class="center"></td>-->
+                                    </tr>
+                                </volist>
 
                                 </tbody>
                             </table>
@@ -141,11 +118,11 @@
         });
 
         //Add dataTable Icons
-        var functions = $('<a class="btn btn-default btn-xs" href="#" data-original-title="Open" data-toggle="tooltip"><i class="fa fa-file"></i></a> <a class="btn btn-primary btn-xs" href="#" data-original-title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger btn-xs" href="#" data-original-title="Remove" data-toggle="tooltip"><i class="fa fa-times"></i></a>');
-        $("#datatable-icons tbody tr td:last-child").each(function(){
-            $(this).html("");
-            functions.clone().appendTo(this);
-        });
+//        var functions = $('<a class="btn btn-default btn-xs" href="#" data-original-title="Open" data-toggle="tooltip"><i class="fa fa-file"></i></a> <a class="btn btn-primary btn-xs" href="#" data-original-title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger btn-xs" href="#" data-original-title="Remove" data-toggle="tooltip"><i class="fa fa-times"></i></a>');
+//        $("#datatable-icons tbody tr td:last-child").each(function(){
+//            $(this).html("");
+//            functions.clone().appendTo(this);
+//        });
 
         $(document).ready(function(){
             //initialize the javascript

@@ -55,6 +55,7 @@
                     </div>
                     <div class="content">
                         <div class="table-responsive">
+
                             <!--<table class="table table-bordered" id="datatable" >-->
                             <table class="table table-bordered" id="datatable-icons" >
                             <!--<table class="table table-bordered" id="datatable2" >-->
@@ -63,6 +64,8 @@
                                     <th>序号</th>
                                     <th>栏目名称</th>
                                     <th>栏目类型</th>
+                                    <th>栏目级别</th>
+                                    <th>父级栏目</th>
                                     <th>创建时间</th>
                                     <th>排序</th>
                                     <th>操作</th>
@@ -70,39 +73,23 @@
                                 </thead>
                                 <tbody>
 
-                                <tr class="gradeA">
-                                    <td>1</td>
-                                    <td>网站首页</td>
-                                    <td>列表</td>
-                                    <td class="center">2017-06-21</td>
-                                    <td class="center">1</td>
-                                    <td class="center">编辑 | 删除</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>2</td>
-                                    <td>会员中心</td>
-                                    <td>列表</td>
-                                    <td class="center">2017-06-21</td>
-                                    <td class="center">1</td>
-                                    <td class="center">编辑 | 删除</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>3</td>
-                                    <td>新闻资讯</td>
-                                    <td>内容</td>
-                                    <td class="center">2017-06-21</td>
-                                    <td class="center">1</td>
-                                    <td class="center">编辑 | 删除</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>4</td>
-                                    <td>联系客服</td>
-                                    <td>图文</td>
-                                    <td class="center">2017-06-21</td>
-                                    <td class="center">1</td>
-                                    <td class="center">编辑 | 删除</td>
-                                </tr>
-
+                                <volist name="results" id="result">
+                                    <tr class="gradeX">
+                                        <td><?php static $j=0;$j++;echo($j);?></td>
+                                        <td>{$result.name}</td>
+                                        <td>{$result.type}</td>
+                                        <td><if condition="$result.level eq 0">一级栏目<else/>二级栏目</if></td>
+                                        <td><if condition="$result.parent eq 0">一级栏目<else/><volist name="results" id="vo"><eq name="result.parent" value="$vo.id">{$vo.name}</eq></volist></if></td>
+                                        <td class="center"><?=date("Y-m-d",$result['time'])?></td>
+                                        <td class="center">
+                                            <if condition="$result.level eq 1">==</if>  {$result.sort}
+                                            <a href="javascript:" class="btn btn-facebook" onclick="cate({$result.id},1)">上升</a>
+                                            <a href="javascript:" class="btn btn-facebook" onclick="cate({$result.id},0)">下降</a></td>
+                                        <td class="center"><a href={:U("/Admin/Column/examine?id=$result[id]")} class="btn btn-dribbble">查看</a>
+                                            <a href={:U("/Admin/Column/edit?id=$result[id]")} class="btn btn-primary">修改</a>
+                                            <a href="javascript:" class="btn btn-danger" onclick="delCate({$result.id})">删除</a></td>
+                                    </tr>
+                                </volist>
                                 </tbody>
                             </table>
                         </div>
@@ -132,6 +119,57 @@
     <script type="text/javascript" src="__PUBLIC__/admin/js/jquery.datatables/bootstrap-adapter/js/datatables.js"></script>
 
 
+    <script>
+        function delCate(aid){
+            if(confirm("确定删除栏目?")){
+                var url="{:U('/Admin/Column/del')}";
+                $.ajax({
+                    url:url,
+                    type:'post',
+                    data:{id:aid},
+                    dataType:'json',
+                    success:function(res){
+                        if(res.error==0){
+                            alert(res.message);
+                            window.location.href = "{:U('/Admin/Column/list')}";
+                        }else{
+                            alert(res.message);
+                            window.location.href = "{:U('/Admin/Column/list')}";
+                        }
+                    }
+                })
+            }else{
+                window.location.href = "{:U('/Admin/Column/list')}";
+            }
+
+        }
+    </script>
+
+    <script>
+        function cate(aid,status){
+            if(status==1){
+                var url="{:U('/Admin/Column/up')}";
+            }else{
+                url="{:U('/Admin/column/down')}";
+            }
+            $.ajax({
+                url:url,
+                type:'get',
+                data:{id:aid},
+                dataType:'json',
+                success:function(res){
+                    if(res.error==0){
+                        alert(res.message);
+                        window.location.href = "{:U('/Admin/Column/list')}";
+                    }else{
+                        alert(res.message);
+                        window.location.href = "{:U('/Admin/Column/list')}";
+                    }
+                }
+            })
+        }
+
+    </script>
     <script type="text/javascript">
         //Add dataTable Functions
 //        var functions = $('<div class="btn-group"><button class="btn btn-default btn-xs" type="button">Actions</button><button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul role="menu" class="dropdown-menu pull-right"><li><a href="#">Edit</a></li><li><a href="#">Copy</a></li><li><a href="#">Details</a></li><li class="divider"></li><li><a href="#">Remove</a></li></ul></div>');

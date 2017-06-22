@@ -85,17 +85,17 @@
                                         <td>{$result.uid}</td>
                                         <td>{$result.phone}</td>
                                         <td class="center">{$result.email}</td>
-                                        <td class="center">10000.00</td>
-                                        <td class="center">520</td>
-                                        <td class="center">20</td>
-                                        <td class="center">2017/6/20</td>
-                                        <td class="center">李四</td>
-                                        <td class="center">信旺华府骏苑</td>
-                                        <td class="center">340010010011</td>
-                                        <td class="center">6222028886666868868</td>
-                                        <td class="center">中国人民银行</td>
-                                        <td class="center">北京天安门</td>
-                                        <td class="center">已认证</td>
+                                        <td class="center">{$result.account}</td>
+                                        <td class="center">{$result.numcoin}</td>
+                                        <td class="center">{$result.mediumer}</td>
+                                        <td class="center"><?=date("Y-m-d H:i:s",$result['logintime']);?></td>
+                                        <td class="center">{$result.realname}</td>
+                                        <td class="center">{$result.place}</td>
+                                        <td class="center">{$result.idnumber}</td>
+                                        <td class="center">{$result.bankaccount}</td>
+                                        <td class="center">{$result.bankopening}</td>
+                                        <td class="center">{$result.bankaddres}</td>
+                                        <td class="center"><if condition="$result.status eq 1">已认证<else />未认证</if></td>
                                     </tr>
                                 </volist>
 

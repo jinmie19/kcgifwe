@@ -24,7 +24,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="{:U('/')}">首页</a></li>
+                <li class="active"><a href="{:U('/admin')}">首页</a></li>
                 <li><a href="#about">我的面板</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">设置 <b class="caret"></b></a>
@@ -164,64 +164,63 @@
                         <li>
                             <a href="#"><i class="fa fa-bitcoin"></i><span>轩辕币管理</span></a>
                             <ul class="sub-menu">
-                                <li class="<block name='coin'></block>"><a href="{:U('/coin')}">轩辕币信息</a></li>
+                                <li class="<block name='coin'></block>"><a href="{:U('Coin/coin')}">轩辕币信息</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa  fa-users"></i><span>用户管理</span></a>
                             <ul class="sub-menu">
-                                <li class="<block name='user'></block>"><a href="{:U('/user')}">用户信息</a></li>
-                                <li class="<block name='audit'></block>"><a href="{:U('/audit')}">实名审核</a></li>
-                                <li class="<block name='loginRecord'></block>"><a href="{:U('/loginRecord')}">登录记录</a></li>
+                                <li class="<block name='user'></block>"><a href="{:U('User/user')}">用户信息</a></li>
+                                <li class="<block name='audit'></block>"><a href="{:U('User/audit')}">实名审核</a></li>
+                                <li class="<block name='loginRecord'></block>"><a href="{:U('User/loginRecord')}">登录记录</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-user"></i><span>会员管理</span></a>
                             <ul class="sub-menu">
-                                <li class="<block name='cMember'></block>"><a href="{:U('/cMember')}">综合会员</a></li>
-                                <li class="<block name='sMember'></block>"><a href="{:U('/sMember')}">特别会员</a></li>
+                                <li class="<block name='cMember'></block>"><a href="{:U('Member/cMember')}">综合会员</a></li>
+                                <li class="<block name='sMember'></block>"><a href="{:U('Member/sMember')}">特别会员</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-cny"></i><span>交易管理</span></a>
                             <ul class="sub-menu">
-                                <li class="<block name='currentDelegate'></block>"><a href="{:U('/currentDelegate')}">当前委托</a></li>
-                                <li class="<block name='historyDelegate'></block>"><a href="{:U('/historyDelegate')}">历史委托</a></li>
-                                <li class="<block name='tradeRecord'></block>"><a href="{:U('/tradeRecord')}">交易记录</a></li>
+                                <li class="<block name='currentDelegate'></block>"><a href="{:U('Trade/currentDelegate')}">当前委托</a></li>
+                                <li class="<block name='historyDelegate'></block>"><a href="{:U('Trade/historyDelegate')}">历史委托</a></li>
+                                <li class="<block name='tradeRecord'></block>"><a href="{:U('Trade/tradeRecord')}">交易记录</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa  fa-money"></i><span>财务管理</span></a>
                             <ul class="sub-menu">
-                                <li class="<block name='tb'></block>"><a href="{:U('/tb')}">提币申请</a></li>
-                                <li class="<block name='tx'></block>"><a href="{:U('/tx')}">提现申请</a></li>
-                                <li class="<block name='cz'></block>"><a href="{:U('/cz')}">充值记录</a></li>
-                                <li class="<block name='wb'></block>"><a href="{:U('/wb')}">挖币记录</a></li>
-                                <li class="<block name='zm'></block>"><a href="{:U('/zm')}">账目明细</a></li>
+                                <li class="<block name='tb'></block>"><a href="{:U('Finance/tb')}">提币申请</a></li>
+                                <li class="<block name='tx'></block>"><a href="{:U('Finance/tx')}">提现申请</a></li>
+                                <li class="<block name='cz'></block>"><a href="{:U('Finance/cz')}">充值记录</a></li>
+                                <li class="<block name='wb'></block>"><a href="{:U('Finance/wb')}">挖币记录</a></li>
+                                <li class="<block name='zm'></block>"><a href="{:U('Finance/zm')}">账目明细</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-table nav-icon"></i><span>报表中心</span></a>
                             <ul class="sub-menu">
-                                <li class="<block name='day'></block>"><a href="{:U('/day')}">日数据汇总</a></li>
-                                <li class="<block name='week'></block>"><a href="{:U('/week')}">周数据汇总</a></li>
-                                <li class="<block name='month'></block>"><a href="{:U('/month')}">月数据汇总</a></li>
+                                <li class="<block name='day'></block>"><a href="{:U('Report/day')}">日数据汇总</a></li>
+                                <li class="<block name='week'></block>"><a href="{:U('Report/week')}">周数据汇总</a></li>
+                                <li class="<block name='month'></block>"><a href="{:U('Report/month')}">月数据汇总</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-indent nav-icon"></i><span>栏目管理</span></a>
                             <ul class="sub-menu">
-                                <li class="<block name='listColumn'></block>"><a href="{:U('/listColumn')}">栏目列表</a></li>
-                                <li class="<block name='addColumn'></block>"><a href="{:U('/addColumn')}">增加栏目</a></li>
-                                <li class="<block name='editColumn'></block>"><a href="{:U('/editColumn')}">修改栏目</a></li>
+                                <li class="<block name='listColumn'></block>"><a href="{:U('Column/list')}">栏目列表</a></li>
+                                <li class="<block name='addColumn'></block>"><a href="{:U('Column/add')}">增加栏目</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="{:U('/')}"><i class="fa fa-file-text-o"></i><span>文章管理</span></a>
                             <ul class="sub-menu">
-                                <li class="<block name='listArticle'></block>"><a href="{:U('/listArticle')}">文章列表</a></li>
-                                <li class="<block name='addArticle'></block>"><a href="{:U('/addArticle')}">增加文章</a></li>
-                                <li class="<block name='editArticle'></block>"><a href="{:U('/editArticle')}">修改文章</a></li>
+                                <li class="<block name='listArticle'></block>"><a href="{:U('Article/list')}">文章列表</a></li>
+                                <li class="<block name='addArticle'></block>"><a href="{:U('Article/add')}">增加文章</a></li>
+                                <li class="<block name='editArticle'></block>"><a href="{:U('Article/edit')}">修改文章</a></li>
                             </ul>
                         </li>
                         <li>

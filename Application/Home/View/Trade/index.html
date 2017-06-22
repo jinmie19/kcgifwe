@@ -80,7 +80,8 @@
         <th>序号</th>
         <th>时间</th>
         <th>类型</th>
-        <th>单价</th>
+        <th>委托单价</th>
+        <th>成交单价</th>
         <th>委托数</th>
         <th>成交量</th>
         <th>平均成交价</th>
@@ -93,6 +94,7 @@
             <td>{$row['time']|date="Y-m-d H:i:s",###}</td>
             <td>{$row['type']}</td>
             <td>{$row['price']}</td>
+            <td>{$row['deal']}</td>
             <td>{$row['number']}</td>
             <td>{$row['trading']}</td>
             <td>{$row['average']}</td>
@@ -112,6 +114,7 @@
         <th>委托价</th>
         <th>交易价</th>
         <th>数量</th>
+        <th>金额</th>
         <th>手续费</th>
     </tr>
     <volist name="tradeResults" id="row">
@@ -122,6 +125,7 @@
             <td>{$row['delegateprice']}</td>
             <td>{$row['tradeprice']}</td>
             <td>{$row['number']}</td>
+            <td>{$row['sum']}</td>
             <td>{$row['fee']}</td>
         </tr>
     </volist>
@@ -262,7 +266,7 @@
 <script>
     $(function(){
         $('.sell').click(function(){
-
+            // alert('卖出进来');
             if($('.sell').data('uid') == 'no'){
                 alert('请先登录,再进行交易!');
                 window.location.href = "{:U('/login')}";
@@ -296,7 +300,7 @@
                             alert(resp.message);
                             window.location.href = "{:U('/trade')}";
                         }else{
-
+                            alert(resp.message);
                         }
                     }
                 });

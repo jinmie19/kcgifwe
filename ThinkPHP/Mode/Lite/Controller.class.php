@@ -213,6 +213,8 @@ abstract class Controller {
         exit($data);
     }
 
+
+
     /**
      * Action跳转(URL重定向） 支持指定模块和延时跳转
      * @access protected

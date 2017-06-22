@@ -1,6 +1,6 @@
 <extend name="Layout/layout"/>
 <block name="head">
-    <title>交易管理</title>
+    <title>系统中心--交易管理</title>
     <link href='http/fonts.googleapis.com/MS_5.html' rel='stylesheet' type='text/css'>
     <link href='http/fonts.googleapis.com/MS_3.html' rel='stylesheet' type='text/css'>
 
@@ -65,58 +65,34 @@
                                     <th>用户编号</th>
                                     <th>委托人</th>
                                     <th>类型</th>
-                                    <th>单价</th>
+                                    <th>委托单价</th>
+                                    <th>交易单价</th>
                                     <th>数量</th>
                                     <th>金额</th>
                                     <th>手续费</th>
+                                    <th>交易对方编号</th>
+                                    <th>对方交易人</th>
+                                    <th>委托单号</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                <tr class="gradeA">
-                                    <td>1</td>
-                                    <td>2017/06/20</td>
-                                    <td>0010010001</td>
-                                    <td class="center">郎基共享</td>
-                                    <td class="center">买入</td>
-                                    <td class="center">2500.00</td>
-                                    <td class="center">25</td>
-                                    <td class="center">625250</td>
-                                    <td class="center">350.00</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>2</td>
-                                    <td>2017/06/20</td>
-                                    <td>0010010008</td>
-                                    <td class="center">空创网络</td>
-                                    <td class="center">卖出</td>
-                                    <td class="center">2500.00</td>
-                                    <td class="center">25</td>
-                                    <td class="center">625250</td>
-                                    <td class="center">350.00</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>3</td>
-                                    <td>2017/06/20</td>
-                                    <td>0010010001</td>
-                                    <td class="center">张三</td>
-                                    <td class="center">买入</td>
-                                    <td class="center">2500.00</td>
-                                    <td class="center">25</td>
-                                    <td class="center">625250</td>
-                                    <td class="center">350.00</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>4</td>
-                                    <td>2017/06/20</td>
-                                    <td>0010010001</td>
-                                    <td class="center">赵六</td>
-                                    <td class="center">买入</td>
-                                    <td class="center">2500.00</td>
-                                    <td class="center">25</td>
-                                    <td class="center">625250</td>
-                                    <td class="center">350.00</td>
-                                </tr>
+                                <volist name="trade" id="row">
+                                    <tr class="gradeA">
+                                        <td>{$i}</td>
+                                        <td>{$row.time|date="Y/m/d H:i:s",###}</td>
+                                        <td>{$row.uid}</td>
+                                        <td class="center">{$row.phone}</td>
+                                        <td class="center">{$row.type}</td>
+                                        <td class="center">{$row.delegateprice}</td>
+                                        <td class="center">{$row.tradeprice}</td>
+                                        <td class="center">{$row.number}</td>
+                                        <td class="center">{$row.sum}</td>
+                                        <td class="center">{$row.fee}</td>
+                                        <td class="center">{$row.sid}</td>
+                                        <td class="center">{$row.sphone}</td>
+                                        <td class="center">{$row.delegate_id}</td>
+                                    </tr>
+                                </volist>
 
                                 </tbody>
                             </table>

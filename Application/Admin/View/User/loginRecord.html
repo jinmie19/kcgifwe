@@ -68,36 +68,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                    <volist name="results" id="result">
+                                        <tr class="gradeA">
+                                            <td>{$i}</td>
+                                            <td>{$result.phone}</td>
+                                            <td><?=date("Y-m-d H:i:s",$result['time']);?></td>
+                                            <td class="center">{$result.ip}</td>
+                                            <td class="center">登录{$result.status}</td>
+                                        </tr>
 
-                                <tr class="gradeA">
-                                    <td>1</td>
-                                    <td>张三</td>
-                                    <td>2017/6/20</td>
-                                    <td class="center">192.168.0.26</td>
-                                    <td class="center">登录成功</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>2</td>
-                                    <td>李四</td>
-                                    <td>2017/6/20</td>
-                                    <td class="center">192.168.0.26</td>
-                                    <td class="center">登录成功</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>3</td>
-                                    <td>王五</td>
-                                    <td>2017/6/20</td>
-                                    <td class="center">192.168.0.26</td>
-                                    <td class="center">登录成功</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>4</td>
-                                    <td>赵六</td>
-                                    <td>2017/6/20</td>
-                                    <td class="center">192.168.0.26</td>
-                                    <td class="center">登录成功</td>
-                                </tr>
-
+                                    </volist>
                                 </tbody>
                             </table>
                         </div>

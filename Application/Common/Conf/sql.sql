@@ -27,7 +27,7 @@ create table kc_coin
 -- 创建用户表
 drop table if exists kc_user;
 create table kc_user(
-  user_id int unsigned auto_increment ,
+  id int unsigned auto_increment ,
   uid varchar(12) unique not null default '',
   email varchar(255) not null default '',
   password char(40) not null default '',
@@ -68,7 +68,8 @@ create table kc_user(
   bankOpening varchar(125) not null default '',
   bankAddres varchar(125) not null default '',
   ip varchar(125) not null default '',
-  primary key (user_id),
+  status tinyint not null default 1,
+  primary key (id),
   index (uid),
   index (phone)
 )engine=innodb charset=utf8;
@@ -122,7 +123,8 @@ CREATE TABLE kc_delegate(
   fee DECIMAL(10,2) NOT NULL DEFAULT 0.0,
   sign varchar(16) NOT NULL DEFAULT '', -- 委托号
   PRIMARY KEY (id),
-  INDEX (uid)
+  INDEX (uid),
+  INDEX (sign)
 )CHARSET = utf8 ; -- 委托表也要engine=InnoDb 因为要加锁操作
 # ALTER TABLE kc_delegate ADD balance INT UNSIGNED NOT NULL DEFAULT 0;
 # ALTER TABLE kc_delegate ADD deal DECIMAL(10,2) NOT NULL DEFAULT 0.0;
@@ -135,7 +137,7 @@ CREATE TABLE kc_delegate(
 DROP TABLE IF EXISTS kc_trade;
 CREATE TABLE kc_trade(
   id INT UNSIGNED AUTO_INCREMENT,
-  delegate_id INT UNSIGNED NOT NULL DEFAULT 0,
+  delegate_id varchar(16) NOT NULL DEFAULT '',
   uid VARCHAR(12) NOT NULL DEFAULT '',
   phone CHAR(11) NOT NULL DEFAULT '',
   time INT UNSIGNED NOT NULL DEFAULT 0, -- 交易时间
@@ -153,7 +155,7 @@ CREATE TABLE kc_trade(
   INDEX (sid),
   INDEX (sphone)
 )CHARSET = utf8 ;
-# ALTER TABLE user10 CHANGE test test1 CHAR(32) NOT NULL DEFAULT '123';
+# ALTER TABLE kc_trade modify delegate_id varchar(16) NOT NULL DEFAULT '';
 
 -- 安全设置记录表
 DROP TABLE IF EXISTS kc_safety_record;
@@ -239,7 +241,7 @@ CREATE TABLE kc_finance(
   INDEX (phone)
 )CHARSET = utf8 ;
 
---铸币厂管理中心记录表
+-- 铸币厂管理中心记录表
 DROP TABLE IF EXISTS kc_mint;
 CREATE TABLE kc_mint(
   id INT UNSIGNED AUTO_INCREMENT,

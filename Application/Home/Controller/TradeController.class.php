@@ -43,7 +43,6 @@ class TradeController extends Controller
 
         }
         else{
-            echo md5('18256089792jrenet2e');exit();
             session('phone','18256089792');
 
             // 取用户信息
@@ -65,16 +64,23 @@ class TradeController extends Controller
             $oldResult = M('delegate')->where($map)-> select();
             $oldResult = array_map(function($v){
                 $v['trading'] = $v['number'] - $v['balance']; //成交量
-                $v['turnover'] = $v['trading'] * $v['price']; //成交额
+                $v['turnover'] = $v['trading'] * $v['deal']; //成交额
                 $v['average'] = $v['turnover'] / $v['trading']; //平均成交价
                 return $v;
             },$oldResult);
 
+
             // 交易记录
             $tradeResult = M('Trade')->where('phone=%s',$phone)->select();
+            $tradeResult = array_map(function($v){
+                $v['sum'] = $v['tradeprice'] * $v['number']; //成交额
+                return $v;
+            },$tradeResult);
 
 
-
+//            echo '<pre>';
+//            print_r($tradeResult);
+//            exit;
 
             $this->assign('results',$result);
             //$this->assign('sellLists',$sellList);
@@ -93,9 +99,9 @@ class TradeController extends Controller
      * @param $price
      * @param string $type
      */
-    public function trade($phone,$number,$price,$type='买入',$method='trade')
+    public function trade($phone,$number,$price,$type='buy',$method='trade')
     {
-        if($type == '买入'){
+        if($type == 'buy'){
             // 取用户的购买价格和购买数量
             $data['price'] = $price;    // 买入价格
             $data['number'] = $number;  // 买入量
@@ -107,7 +113,10 @@ class TradeController extends Controller
 
                 //获取买方/卖方信息,进行交易处理
                 $userBuy = D('User') -> findUser($phone);
+                if(!$userBuy) $this->transResult('rollback','买方用户不存在,委托');
+
                 $userSell = D('User') -> findUser($result['phone']);
+                if(!$userSell) $this->transResult('rollback','卖方用户不存在,委托');
 
                 // 买入量 = 卖方 剩余卖出量
                 if($data['number'] == $result['balance']){
@@ -433,6 +442,7 @@ class TradeController extends Controller
             }
         }
         else{
+
             // 取卖家用户的 卖出价格 和 卖出数量
             $data['price'] = $price;   // 卖出价格
             $data['number'] = $number; // 卖出量
@@ -448,8 +458,10 @@ class TradeController extends Controller
 
                 //进行交易处理,获取 卖方/买方 用户信息
                 $userSell = D('User') -> findUser($phone);
+                if(!$userSell) $this->transResult('rollback','卖方用户不存在,委托');
                 $userBuy = D('User') -> findUser($result['phone']);
-
+                if(!$userBuy) $this->transResult('rollback','买方用户不存在,委托');
+                //$this->ajaxResult(1,$userBuy['phone'] .'-进入卖出交易-'.$userSell['phone']);
                 // 卖出量 = 剩余买入量
                 if($data['number'] == $result['balance']){
 
@@ -483,6 +495,7 @@ class TradeController extends Controller
                             'price'=>$data['price'],    //委托价格
                             'deal'=>$result['price'],     //以买方价格成交 = 成交价格
                             'number'=>$data['number'],  //委托数量(正好成交)
+                            'type'=>'卖出',  //委托数量(正好成交)
                             //'balance'=>$data['number'], //剩余委托数量(正好成交,无剩余量,默认0)
                             'status'=>'已成交'
                         ] ;
@@ -578,10 +591,12 @@ class TradeController extends Controller
                             'price'=>$data['price'],    //委托价格
                             'deal'=>$result['price'],     //以买方价格成交 = 成交价格
                             'number'=>$data['number'],  //委托数量(正好成交)
-                            //'balance'=>$data['number'], //剩余委托数量(正好成交,无剩余量,默认0)
+                            'type'=>'卖出',
+                            'balance'=>0, //剩余委托数量(正好成交,无剩余量,默认0)
                             'status'=>'已成交'
                         ] ;
                         $result3 = D('delegate') -> addOrder($data3);
+
                         if(!$result3){
                             $this->transResult('rollback','卖出');
                         }
@@ -594,13 +609,14 @@ class TradeController extends Controller
                             'delegatePrice'=>$data['price'],        // 委托价格
                             'tradePrice'=>$result['price'],           // 卖出价格(以买方家成交)
                             'number'=>$data['number'],              // 卖出数量(正好成交)
-                            'sid'=>$userBuy['phone'],               // 买方uid
+                            'sid'=>$userBuy['uid'],               // 买方uid
                             'sphone'=>$userBuy['phone'],            // 买方phone
                             'delegate_id'=>$result['sign'],         // 买方的委托id号
                             'type'  => '卖出',
                             'fee'   =>  $fee
                         ] ;
                         $result4 = D('Trade') -> addTrade($data4);
+
                         if(!$result4){
                             $this->transResult('rollback','卖出');
                         }
@@ -630,7 +646,7 @@ class TradeController extends Controller
                             'balance'=>$resultNum,
                             //'status'=>'委托中',
                         ] ;
-                        $result6 = D('delegate') -> updateOrder($userSell['phone'],$data6);
+                        $result6 = D('delegate') -> updateOrder($userBuy['phone'],$data6);
                         if(!$result6){
                             $this->transResult('rollback','卖出');
                         }
@@ -1478,7 +1494,7 @@ class TradeController extends Controller
                 $this->ajaxResult(1,'未登录用户禁止访问!');
             }
 
-            $this->trade($phone,I('post.number'),I('post.price'),'买入');
+            $this->trade($phone,I('post.number'),I('post.price'),'buy');
 
         }else{
             $data['error'] = 1;
@@ -1490,6 +1506,7 @@ class TradeController extends Controller
     // 卖币(委托)操作
     public function sellAction()
     {
+
         if(IS_POST){
             // 取卖家用户信息
             $phone = session('phone');
@@ -1497,8 +1514,7 @@ class TradeController extends Controller
             if(!$phone){
                 $this->ajaxResult(1,'未登录用户禁止访问!');
             }
-
-            $this->trade($phone,I('post.number'),I('post.price'),'卖出');
+            $this->trade($phone,I('post.number'),I('post.price'),'sell');
 
         }else{
             $data['error'] = 1;

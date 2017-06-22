@@ -14,12 +14,11 @@ class UserController extends Controller
     public function userAction()
     {
         $User=M('user');
-        $results=$User->select();
         if(IS_POST){
 
         }else{
-            $data['results']=$results;
-            $this->assign($data);
+            $list = M('User')->where('level=1')-> select();
+            $this->assign('results',$list);
             $this->display();
         }
     }
@@ -38,6 +37,8 @@ class UserController extends Controller
         if(IS_POST){
 
         }else{
+            $list=M('login_log')->order('time desc')->select();
+            $this->assign('results',$list);
             $this->display();
         }
     }

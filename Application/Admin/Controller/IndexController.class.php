@@ -23,6 +23,7 @@ class IndexController extends Controller {
         if(IS_POST){
 
         }else{
+//            echo U('coin');
             $this->display();
         }
     }

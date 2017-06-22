@@ -39,6 +39,7 @@ class UserModel extends Model{
         $this->mediumer=$data['mediumer'];
         $this->registerTime=time();
         $this->isBindPhone=1;
+        $this->level=1;
         $this->region=$data['region'];
         $result=$this->add();
         if($result!=false){
