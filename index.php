@@ -23,8 +23,6 @@ define('APP_PATH','./Application/');
 //绑定前台模块
 
 //define('BIND_MODULE','Home');
-define('BIND_MODULE','Admin');
-
 
 //define('BIND_MODULE','Home');
 

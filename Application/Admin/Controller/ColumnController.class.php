@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Admin\Model\CategoryModel;
+use Home\Model\ArticleModel;
 use Think\Controller;
 
 class ColumnController extends Controller
@@ -93,12 +94,15 @@ class ColumnController extends Controller
 
     public function delAction(){
         $Cate=new CategoryModel();
+        $Art=new ArticleModel();
         $id=I('post.id');
 
         $result=$Cate->where('id=%d',['%d'=>$id])->find();
         //二级栏目删除
         if($result['level']==1){
             if($Cate->where('id=%d',['%d'=>$id])->delete()){
+                //所属文章删除
+                $Art->where('parent=%d',['%d'=>$id])->delete();
                 $cates=$Cate->where("parent=%d",['%d'=>$result['parent']])->select();
                 foreach($cates as $v){
                     if($v['sort']>$result['sort']){
@@ -117,6 +121,8 @@ class ColumnController extends Controller
         if($result['level']==0){
             //删除一级栏目
             if($Cate->where('id=%d',['%d'=>$id])->delete()){
+                //所属文章删除
+                $Art->where('parent=%d',['%d'=>$id])->delete();
                 $cates=$Cate->where("parent=%d",['%d'=>$result['parent']])->select();
                 foreach($cates as $v){
                     if($v['sort']>$result['sort']){
@@ -127,7 +133,11 @@ class ColumnController extends Controller
                     }
                 }
                 //找到并删除二级栏目
-                if($Cate->where('parent=%d',['%d'=>$result['id']])->select()){
+                if($res=$Cate->where('parent=%d',['%d'=>$result['id']])->select()){
+                    //所属文章删除
+                    foreach($res as $aa){
+                        $Art->where('parent=%d',['%d'=>$aa['id']])->delete();
+                    }
                     if($Cate->where('parent=%d',['%d'=>$result['id']])->delete()){
                         $this->ajaxResult(0,'栏目删除成功!');
                     }

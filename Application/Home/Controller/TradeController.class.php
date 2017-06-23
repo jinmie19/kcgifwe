@@ -243,7 +243,7 @@ class TradeController extends Controller
 
                         // 交易成功,分别记录 买方历史委托 买方交易记录 和 买方交易记录 卖方继续委托
                         //历史委托列表显示：委托时间、类型（买入/卖出）、委托价格price、委托数number、平均成交价、成交量、成交额、状态
-                        $data3 = [ //买方历史委托数据
+                        $data3 = [ //买方历史 委托 数据
                             'uid'=>$userBuy['uid'],
                             'phone'=>$userBuy['phone'],
                             'time'=>$resultBuy['time'],
@@ -260,7 +260,7 @@ class TradeController extends Controller
                         }
 
                         // 交易表 列表显示：时间、类型（买入/卖出）、单价、数量、金额、手续费
-                        $data4 = [ //买方交易数据
+                        $data4 = [ //买方 交易 数据
                             'phone'=>$userBuy['phone'],
                             'uid'=>$userBuy['uid'],
                             'time'=>$resultBuy['time'],

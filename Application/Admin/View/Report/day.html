@@ -76,67 +76,23 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                <tr class="gradeA">
-                                    <td>1</td>
-                                    <td>2017-06-20</td>
-                                    <td>100000.00</td>
-                                    <td class="center">500</td>
-                                    <td class="center">200</td>
-                                    <td class="center">50</td>
-                                    <td class="center">50000</td>
-                                    <td class="center">80000</td>
-                                    <td class="center">60000</td>
-                                    <td class="center">60</td>
-                                    <td class="center">35</td>
-                                    <td class="center">10</td>
-                                    <td class="center">1358.00</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>2</td>
-                                    <td>2017-06-19</td>
-                                    <td>100000.00</td>
-                                    <td class="center">500</td>
-                                    <td class="center">200</td>
-                                    <td class="center">50</td>
-                                    <td class="center">50000</td>
-                                    <td class="center">80000</td>
-                                    <td class="center">60000</td>
-                                    <td class="center">60</td>
-                                    <td class="center">35</td>
-                                    <td class="center">10</td>
-                                    <td class="center">1358.00</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>3</td>
-                                    <td>2017-06-18</td>
-                                    <td>100000.00</td>
-                                    <td class="center">500</td>
-                                    <td class="center">200</td>
-                                    <td class="center">50</td>
-                                    <td class="center">50000</td>
-                                    <td class="center">80000</td>
-                                    <td class="center">60000</td>
-                                    <td class="center">60</td>
-                                    <td class="center">35</td>
-                                    <td class="center">10</td>
-                                    <td class="center">1358.00</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>4</td>
-                                    <td>2017-06-17</td>
-                                    <td>100000.00</td>
-                                    <td class="center">500</td>
-                                    <td class="center">200</td>
-                                    <td class="center">50</td>
-                                    <td class="center">50000</td>
-                                    <td class="center">80000</td>
-                                    <td class="center">60000</td>
-                                    <td class="center">60</td>
-                                    <td class="center">35</td>
-                                    <td class="center">10</td>
-                                    <td class="center">1358.00</td>
-                                </tr>
+                                <volist name="sum" id="row">
+                                    <tr class="gradeA">
+                                        <td>{$i}</td>
+                                        <td>{$key}</td>
+                                        <td>{$row.amount}</td>
+                                        <td class="center">{$row.number}</td>
+                                        <td class="center">demo</td>
+                                        <td class="center">50</td>
+                                        <td class="center">50000</td>
+                                        <td class="center">80000</td>
+                                        <td class="center">60000</td>
+                                        <td class="center">60</td>
+                                        <td class="center">35</td>
+                                        <td class="center">10</td>
+                                        <td class="center">{$row.fee}</td>
+                                    </tr>
+                                </volist>
 
                                 </tbody>
                             </table>
@@ -169,18 +125,18 @@
 
     <script type="text/javascript">
         //Add dataTable Functions
-        var functions = $('<div class="btn-group"><button class="btn btn-default btn-xs" type="button">Actions</button><button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul role="menu" class="dropdown-menu pull-right"><li><a href="#">Edit</a></li><li><a href="#">Copy</a></li><li><a href="#">Details</a></li><li class="divider"></li><li><a href="#">Remove</a></li></ul></div>');
-        $("#datatable tbody tr td:last-child").each(function(){
-            $(this).html("");
-            functions.clone().appendTo(this);
-        });
-
-        //Add dataTable Icons
-        var functions = $('<a class="btn btn-default btn-xs" href="#" data-original-title="Open" data-toggle="tooltip"><i class="fa fa-file"></i></a> <a class="btn btn-primary btn-xs" href="#" data-original-title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger btn-xs" href="#" data-original-title="Remove" data-toggle="tooltip"><i class="fa fa-times"></i></a>');
-        $("#datatable-icons tbody tr td:last-child").each(function(){
-            $(this).html("");
-            functions.clone().appendTo(this);
-        });
+//        var functions = $('<div class="btn-group"><button class="btn btn-default btn-xs" type="button">Actions</button><button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul role="menu" class="dropdown-menu pull-right"><li><a href="#">Edit</a></li><li><a href="#">Copy</a></li><li><a href="#">Details</a></li><li class="divider"></li><li><a href="#">Remove</a></li></ul></div>');
+//        $("#datatable tbody tr td:last-child").each(function(){
+//            $(this).html("");
+//            functions.clone().appendTo(this);
+//        });
+//
+//        //Add dataTable Icons
+//        var functions = $('<a class="btn btn-default btn-xs" href="#" data-original-title="Open" data-toggle="tooltip"><i class="fa fa-file"></i></a> <a class="btn btn-primary btn-xs" href="#" data-original-title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger btn-xs" href="#" data-original-title="Remove" data-toggle="tooltip"><i class="fa fa-times"></i></a>');
+//        $("#datatable-icons tbody tr td:last-child").each(function(){
+//            $(this).html("");
+//            functions.clone().appendTo(this);
+//        });
 
         $(document).ready(function(){
             //initialize the javascript
@@ -205,8 +161,8 @@
              */
             var nCloneTh = document.createElement( 'th' );
             var nCloneTd = document.createElement( 'td' );
-            nCloneTd.innerHTML = '<img class="toggle-details" src="__PUBLIC__/admin/images/stat-down.png" />';
-            nCloneTd.className = "center";
+//            nCloneTd.innerHTML = '<img class="toggle-details" src="__PUBLIC__/admin/images/stat-down.png" />';
+//            nCloneTd.className = "center";
 
             $('#datatable2 thead tr').each( function () {
                 this.insertBefore( nCloneTh, this.childNodes[0] );
@@ -230,21 +186,21 @@
              * Note that the indicator for showing which row is open is not controlled by DataTables,
              * rather it is done here
              */
-            $('#datatable2').delegate('tbody td img','click', function () {
-                var nTr = $(this).parents('tr')[0];
-                if ( oTable.fnIsOpen(nTr) )
-                {
-                    /* This row is already open - close it */
-                    this.src = "__PUBLIC__/admin/images/stat-down.png";
-                    oTable.fnClose( nTr );
-                }
-                else
-                {
-                    /* Open this row */
-                    this.src = "__PUBLIC__/admin/images/stat-up.png";
-                    oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
-                }
-            } );
+//            $('#datatable2').delegate('tbody td img','click', function () {
+//                var nTr = $(this).parents('tr')[0];
+//                if ( oTable.fnIsOpen(nTr) )
+//                {
+//                    /* This row is already open - close it */
+//                    this.src = "__PUBLIC__/admin/images/stat-down.png";
+//                    oTable.fnClose( nTr );
+//                }
+//                else
+//                {
+//                    /* Open this row */
+//                    this.src = "__PUBLIC__/admin/images/stat-up.png";
+//                    oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+//                }
+//            } );
 
             $('.dataTables_filter input').addClass('form-control').attr('placeholder','Search');
             $('.dataTables_length select').addClass('form-control');

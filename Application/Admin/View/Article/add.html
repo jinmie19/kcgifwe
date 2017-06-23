@@ -26,7 +26,7 @@
         <h2>添加文章</h2>
         <ol class="breadcrumb">
             <li><a href="{:U('/')}">首页</a></li>
-            <li><a href="#">文章管理</a></li>
+            <li><a href="{:U('Admin/Article/list')}">文章管理</a></li>
             <li class="active">添加文章</li>
         </ol>
     </div>
@@ -41,91 +41,98 @@
                         <h3>添加文章</h3>
                     </div>
                     <div class="content">
-                        <form class="form-horizontal group-border-dashed" action="#">
+                        <form class="form-horizontal group-border-dashed" id="myform">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">文章名称</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required placeholder="Type something" />
+                                    <input type="hidden" value="{$art.id}" name="id"/>
+                                    <input type="text" class="form-control" name="name"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">所属一级栏目</label>
+                                <label class="col-sm-3 control-label">所属栏目</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required placeholder="Type something" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">所属二级栏目</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" required placeholder="Type something" />
+                                    <select name="parent"  style="width: 100px;height: 35px">
+                                        <volist name="cates" id="cate">
+                                            <option value="{$cate.id}">
+                                            <if condition="$cate.level eq 1">&nbsp;&nbsp;&nbsp;</if>
+                                            {$cate.name}</option>
+                                        </volist>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">来源</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required placeholder="Type something" />
+                                    <input type="text" class="form-control source" name="source"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">文章简介</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required placeholder="Type something" />
+                                    <input type="text" class="form-control" name="intro"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">文章内容</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required placeholder="Type something" />
+                                    <textarea name="content" rows="10" class="form-control"></textarea>
+
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">形象图</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required placeholder="Type something" />
+                                    <input type="file" name="img"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">附件</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required placeholder="Type something" />
+                                    <input type="file" name="file"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">作者</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required placeholder="Type something" />
+                                    <input type="text" class="form-control" name="author"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">状态</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required placeholder="Type something" />
+                                    <select name="status" id="" style="width: 100px;height: 35px">
+                                        <option value="1">置顶</option>
+                                        <option value="2">精华</option>
+                                        <option value="3">普通</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">SEO标题</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required data-parsley-maxlength="6" placeholder="Max 6 chars." />
+                                    <input type="text" class="form-control" name="title"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">SEO关键字</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required data-parsley-length="[5,10]" placeholder="Text between 5 - 10 chars length" />
+                                    <input type="text" class="form-control" name="keyWord"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">SEO描述</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required data-parsley-min="6" placeholder="Min value is 6" />
+                                    <input type="text" class="form-control" name="description"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">排序                                                                                               </label>
+                                <label class="col-sm-3 control-label">是否上线</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" required data-parsley-max="6" placeholder="Max value is 6" />
+                                    <input type="checkbox" class="form-control" name="isWork" value="1"/>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -156,6 +163,70 @@
     <script type="text/javascript" src="__PUBLIC__/admin/js/bootstrap.switch/bootstrap-switch.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/admin/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 
+    <script>
+        function checkUp(){
+            if($("input[name=name]").val() == ''){
+                alert('请输入文章名称');
+                return false;
+            }else if($(".source").val() == ''){
+                alert('请输入文章来源');
+                return false;
+            }else if($("input[name=intro]").val() == ''){
+                alert('请输入文章简介');
+                return false;
+            }else if($("textarea[name=content]").val() == ''){
+                alert('请输入文章内容');
+                return false;
+            }else if($("input[name=author]").val() == ''){
+                alert('请输入文章作者');
+                return false;
+            }else if($("input[name=title]").val() == ''){
+                alert('请输入SEO标题');
+                return false;
+            }else if($("input[name=keyWord]").val() == ''){
+                alert('请输入SEO关键字');
+                return false;
+            }else if($("input[name=description]").val() == ''){
+                alert('请输入SEO描述');
+                return false;
+            }
+
+        }
+    </script>
+    <script>
+        $(function(){
+            $("button[type=submit]").click(function(){
+
+                if(checkUp()==false){
+                    return false;
+                }
+
+                if(confirm("确定增加文章?")){
+                    $.ajax({
+                        type: "post",
+                        url:"{:U('/Admin/Article/add')}",
+                        data:$('#myform').serialize(),
+                        dataType:'json',
+                        success:function(res){
+                            if(res.error==0){
+                                alert(res.message);
+                                location.href="{:U('/Admin/Article/list')}";
+                            }else{
+                                alert(res.message);
+                                return false;
+                            }
+                        },
+                        error : function () {
+                            alert('系统繁忙,请用电话与我们联系!')
+                        }
+                    });
+
+                }
+                return false;
+
+            })
+        })
+    </script>
     <script type="text/javascript">
         $(document).ready(function(){
             //initialize the javascript

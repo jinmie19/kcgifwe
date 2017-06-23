@@ -141,6 +141,7 @@ CREATE TABLE kc_trade(
   uid VARCHAR(12) NOT NULL DEFAULT '',
   phone CHAR(11) NOT NULL DEFAULT '',
   time INT UNSIGNED NOT NULL DEFAULT 0, -- 交易时间
+  riqi DATE NOT NULL DEFAULT '',
   type ENUM('买入','卖出') NOT NULL DEFAULT '买入',
   delegatePrice DECIMAL(10,2) NOT NULL DEFAULT 0.0,
   tradePrice DECIMAL(10,2) NOT NULL DEFAULT 0.0,
@@ -156,6 +157,7 @@ CREATE TABLE kc_trade(
   INDEX (sphone)
 )CHARSET = utf8 ;
 # ALTER TABLE kc_trade modify delegate_id varchar(16) NOT NULL DEFAULT '';
+# ALTER TABLE kc_trade ADD riqi DATE NOT NULL DEFAULT '';
 
 -- 安全设置记录表
 DROP TABLE IF EXISTS kc_safety_record;

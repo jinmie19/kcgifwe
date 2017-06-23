@@ -41,7 +41,7 @@
         <h2>文章列表</h2>
         <ol class="breadcrumb">
             <li><a href="#">首页</a></li>
-            <li><a href="#">文章管理</a></li>
+            <li><a href="{:U('Admin/Article/list')}">文章管理</a></li>
             <li class="active">文章列表</li>
         </ol>
     </div>
@@ -61,103 +61,48 @@
                                 <thead>
                                 <tr>
                                     <th>序号</th>
-                                    <th>文章标题</th>
-                                    <th>所属一级栏目</th>
-                                    <th>所属二级栏目</th>
+                                    <th>所属栏目</th>
                                     <th>来源</th>
-                                    <th>文章简介</th>
-                                    <th>文章内容</th>
+                                    <th>排序</th>
+                                    <th>文章标题</th>
                                     <th>浏览次数</th>
-                                    <th>形象图</th>
-                                    <th>附件</th>
                                     <th>作者</th>
-                                    <th>状态</th>
                                     <th>创建时间</th>
                                     <th>更新时间</th>
                                     <th>SEO标题</th>
                                     <th>SEO关键字</th>
-                                    <th>SEO描述</th>
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <volist name="results" id="row">
+                                    <tr>
+                                        <td><?php static $j=0;$j++;echo($j);?></td>
+                                        <volist name="cates" id="cate">
+                                            <eq name="row.parent" value="$cate.id">
+                                                <td>{$cate.name}</td>
+                                            </eq>
+                                        </volist>
+                                        <td>{$row.source}</td>
+                                        <td>{$row.sort}
+                                            <a href="javascript:" class="btn btn-primary" id="btn1" onclick="art({$row.id},1)">上升</a>
+                                            <a href="javascript:" class="btn btn-primary" id="btn2" onclick="art({$row.id},0)">下降</a>
+                                        </td>
+                                        <td>{$row.name}</td>
+                                        <td>{$row.count}</td>
+                                        <td>{$row.author}</td>
+                                        <td>{$row['created']|date="Y-m-d",###}</td>
+                                        <td>{$row.updated|date="Y-m-d H:i:s",###}</td>
+                                        <td>{$row.title}</td>
+                                        <td>{$row.keyword}</td>
+                                        <td>
+                                            <a href={:U("/Admin/article/examine?id=$row[id]")}>查看</a>
+                                            <a href={:U("/Admin/article/edit?id=$row[id]")} class="btn btn-primary">修改</a>
+                                            <a href="javascript:" class="btn btn-danger art-del" data-aid="{$row.id}" onclick="delArt({$row.id})">删除</a>
 
-                                <tr class="gradeA">
-                                    <td>1</td>
-                                    <td>轩辕币火爆挖币中</td>
-                                    <td>新闻资讯</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">员工投稿</td>
-                                    <td class="center">轩辕币挖币流程</td>
-                                    <td class="center">轩辕币挖币流程</td>
-                                    <td class="center">20</td>
-                                    <td class="center">img</td>
-                                    <td class="center">附件</td>
-                                    <td class="center">郎基共享</td>
-                                    <td class="center">已发布</td>
-                                    <td class="center">2017/06/21</td>
-                                    <td class="center">2017/06/21</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">郎基新闻,挖币信息</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>2</td>
-                                    <td>轩辕币火爆挖币中</td>
-                                    <td>新闻资讯</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">员工投稿</td>
-                                    <td class="center">轩辕币挖币流程</td>
-                                    <td class="center">轩辕币挖币流程</td>
-                                    <td class="center">20</td>
-                                    <td class="center">img</td>
-                                    <td class="center">附件</td>
-                                    <td class="center">郎基共享</td>
-                                    <td class="center">已发布</td>
-                                    <td class="center">2017/06/21</td>
-                                    <td class="center">2017/06/21</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">郎基新闻,挖币信息</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>3</td>
-                                    <td>轩辕币火爆挖币中</td>
-                                    <td>新闻资讯</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">员工投稿</td>
-                                    <td class="center">轩辕币挖币流程</td>
-                                    <td class="center">轩辕币挖币流程</td>
-                                    <td class="center">20</td>
-                                    <td class="center">img</td>
-                                    <td class="center">附件</td>
-                                    <td class="center">郎基共享</td>
-                                    <td class="center">已发布</td>
-                                    <td class="center">2017/06/21</td>
-                                    <td class="center">2017/06/21</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">郎基新闻,挖币信息</td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>4</td>
-                                    <td>轩辕币火爆挖币中</td>
-                                    <td>新闻资讯</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">员工投稿</td>
-                                    <td class="center">轩辕币挖币流程</td>
-                                    <td class="center">轩辕币挖币流程</td>
-                                    <td class="center">20</td>
-                                    <td class="center">img</td>
-                                    <td class="center">附件</td>
-                                    <td class="center">郎基共享</td>
-                                    <td class="center">已发布</td>
-                                    <td class="center">2017/06/21</td>
-                                    <td class="center">2017/06/21</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">郎基新闻</td>
-                                    <td class="center">郎基新闻,挖币信息</td>
-                                </tr>
-
+                                        </td>
+                                    </tr>
+                                </volist>
                                 </tbody>
                             </table>
                         </div>
@@ -187,6 +132,53 @@
     <script type="text/javascript" src="__PUBLIC__/admin/js/jquery.datatables/bootstrap-adapter/js/datatables.js"></script>
 
 
+    <script>
+        function art(aid,status){
+            if(status==1){
+                var url="{:U('/Admin/Article/up')}";
+            }else{
+                url="{:U('/Admin/Article/down')}";
+            }
+            $.ajax({
+                url:url,
+                type:'post',
+                data:{id:aid},
+                dataType:'json',
+                success:function(res){
+                    if(res.error==0){
+                        alert(res.message);
+                        window.location.href = "{:U('/Admin/Article/list')}";
+                    }else{
+                        alert(res.message);
+                    }
+                }
+            })
+        }
+
+    </script>
+    <script>
+        function delArt(id){
+            if(confirm("确定删除文章?")){
+                var url="{:U('/Admin/Article/del')}";
+                $.ajax({
+                    url:url,
+                    type:'post',
+                    data:{id:id},
+                    dataType:'json',
+                    success:function(res){
+                        if(res.error==0){
+                            alert(res.message);
+                            window.location.href = "{:U('/Admin/Article/list')}";
+                        }else{
+                            alert(res.message);
+                            window.location.href = "{:U('/Admin/Article/list')}";
+                        }
+                    }
+                })
+            }
+
+        }
+    </script>
     <script type="text/javascript">
         //Add dataTable Functions
 //        var functions = $('<div class="btn-group"><button class="btn btn-default btn-xs" type="button">Actions</button><button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul role="menu" class="dropdown-menu pull-right"><li><a href="#">Edit</a></li><li><a href="#">Copy</a></li><li><a href="#">Details</a></li><li class="divider"></li><li><a href="#">Remove</a></li></ul></div>');
