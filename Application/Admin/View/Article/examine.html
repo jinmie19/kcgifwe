@@ -1,0 +1,108 @@
+<extend name="Layout/layout"/>
+<block name="head">
+    <title>栏目管理</title>
+    <link href='http/fonts.googleapis.com/MS_5.html' rel='stylesheet' type='text/css'>
+    <link href='http/fonts.googleapis.com/MS_3.html' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap core CSS -->
+    <link href="__PUBLIC__/admin/js/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/bootstrap.switch/bootstrap-switch.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/jquery.select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/bootstrap.slider/css/slider.css" />
+    <link href="__PUBLIC__/admin/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__PUBLIC__/admin/fonts/font-awesome-4/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/admin/css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/jquery.nanoscroller/nanoscroller.css" />
+    <style type="text/css">
+        .hahaha{
+            padding: 20px 20px 20px 200px;
+        }
+        .hahaha label{
+            text-align: right;
+            width:200px;
+        }
+        .hahaha span{
+            display: inline-block;
+            margin-left: 50px;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head>
+
+</block>
+
+<block name="editColumn">active</block>
+
+<block name="content">
+    <div class="page-head">
+        <h2>查看文章</h2>
+        <ol class="breadcrumb">
+            <li><a href="{:U('/')}">首页</a></li>
+            <li><a href="{:U('Admin/Article/list')}">文章管理</a></li>
+            <li class="active">查看文章</li>
+        </ol>
+    </div>
+    <div class="cl-mcont">
+
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="block-flat">
+                    <div class="header">
+                        <h3>查看文章</h3>
+                    </div>
+                    <div class="content hahaha">
+                        <p><label>文章名称</label><span>{$art.name}</span></p>
+                        <p><label>文章简介</label><span>{$art.intro}</span></p>
+                        <p><label>文章内容</label><span>{$art.content}</span></p>
+                        <p><label>父级栏目</label><span><volist name="cates" id="vo"><eq name="vo.id" value="$art.parent">{$vo.name}</eq></volist></span></p>
+                        <p><label>文章在栏目中顺序</label><span>{$art.sort}</span></p>
+                        <p><label>文章来源</label><span>{$art.source}</span></p>
+                        <p><label>文章作者</label><span>{$art.author}</span></p>
+                        <p><label>阅读次数</label><span>{$art.count}</span></p>
+                        <p><label>文章状态</label><span>{$art.status}</span></p>
+                        <p><label>创建时间</label><span><?=date("Y-m-d H:i:s",$art['created'])?></span></p>
+                        <p><label>更新时间</label><span><?=date("Y-m-d H:i:s",$art['updated'])?></span></p>
+                        <p><label>缩略图</label><span>{$art.img}</span></p>
+                        <p><label>附件</label><span>{$art.file}</span></p>
+                        <p><label>SEO标题</label><span>{$art.title}</span></p>
+                        <p><label>SEO关键字</label><span>{$art.keyword}</span></p>
+                        <p><label>SEO描述</label><span>{$art.description}</span></p>
+                        <p><label>是否上线</label><span><if condition="$art.iswork eq 0">否<else />是</if></span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</block>
+
+<block name="appendJS">
+    <script src="__PUBLIC__/admin/js/jquery.js"></script>
+    <script src="__PUBLIC__/admin/js/jquery.parsley/dist/parsley.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/admin/js/jquery.parsley/src/extra/dateiso.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/admin/js/jquery.select2/select2.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/admin/js/bootstrap.slider/js/bootstrap-slider.js" type="text/javascript"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/jquery.nestable/jquery.nestable.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/behaviour/general.js"></script>
+    <script src="__PUBLIC__/admin/js/jquery.ui/jquery-ui.js" type="text/javascript"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/bootstrap.switch/bootstrap-switch.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //initialize the javascript
+            App.init();
+            $('form').parsley();
+        });
+    </script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="__PUBLIC__/admin/js/behaviour/voice-commands.js"></script>
+    <script src="__PUBLIC__/admin/js/bootstrap/dist/js/bootstrap.min.js"></script>
+</block>
+
